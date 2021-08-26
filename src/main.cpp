@@ -9,11 +9,13 @@
 #include <SimpleModbusSlave.h>
 #include "limits.h"
 
+#define _TASK_TIMECRITICAL
+
 constexpr long BAUDRATE = 9600;
 constexpr uint8_t rpmPin = 2;
 constexpr uint8_t pwmPin = 3;
 constexpr uint8_t onewireBUS = 4;
-constexpr uint8_t resolution = 12;
+constexpr uint8_t resolution = 9;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
@@ -97,7 +99,7 @@ uint16_t regs[numRegs];
 
 Scheduler ts;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
-Task measureTemp(700, TASK_FOREVER, &measureTemp_callback);
+Task measureTemp(750, TASK_FOREVER, &measureTemp_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
 void pwmDuty(byte ocrb);
@@ -117,10 +119,11 @@ void setup() {
 
     ts.init();
     ts.addTask(calculateRPM);
+    ts.addTask(measureTemp);
     ts.enableAll();
 
     ds.begin();
-    regs[6] = -12700;
+    regs[6] = -1000;
     if (ds.getDeviceCount() == 1) {
         ds.getAddress(tempAddr, 0);
         ds.setResolution(tempAddr, resolution);
@@ -141,8 +144,9 @@ void rpmISR() {
 }
 
 void measureTemp_callback() {
-    regs[6] = ds.getTempC(tempAddr) * 100;
-    ds.requestTemperaturesByAddress(tempAddr);
+    regs[6] = (int)ds.getTempC(tempAddr) * 1000;
+    ds.requestTemperatures();
+    regs[7] = measureTemp.getOverrun();
 }
 
 void calculateRPM_callback() {
@@ -152,15 +156,16 @@ void calculateRPM_callback() {
     lastMillis = currentTime;
     regs[5] = deltaT;
     regs[4] = halfRevs;
+    //regs[8] = calculateRPM.getStartDelay();
 
     //cli();
-    if (halfRevs == 0) {
-        lowRPMoverflow++;
-        return;
-    }
-    rpm = (halfRevs / ((float)(deltaT * (1 + lowRPMoverflow)) / 1000.0)) * 60.0 / 4;
+    // if (halfRevs == 0) {
+    //     lowRPMoverflow++;
+    //     return;
+    // }
+    rpm = (halfRevs / ((float)(deltaT /* (1 + lowRPMoverflow)*/) / 1000.0)) * 60.0 / 4;
     halfRevs = 0;
-    lowRPMoverflow = 0;
+    //lowRPMoverflow = 0;
     //sei();
     regs[1] = RPMfilter.addMeasurement(rpm);
     regs[2] = rpm;
