@@ -15,6 +15,12 @@
 
 #define _TASK_TIMECRITICAL
 
+/*! @brief how to receive variables from platformio.ini
+    @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
+*/
+#define ST(A) #A
+#define STR(A) ST(A)
+
 constexpr uint32_t BAUDRATE = 9600;
 constexpr uint32_t PWMfreq = 25000;
 constexpr uint8_t rpmPin = D1; //D1
@@ -25,7 +31,7 @@ constexpr uint8_t resolution = 9;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
-const String mDNS_name = "fanControl";
+const String mDNS_name = STR(MDNS_NAME);
 
 volatile uint8_t halfRevs = 0;
 uint8_t lowRPMoverflow = 0;
