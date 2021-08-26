@@ -6,15 +6,16 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <TaskScheduler.h>
-#include <SimpleModbusSlave.h>
 #include "limits.h"
+#include <ModbusRTU.h>
 
 #define _TASK_TIMECRITICAL
 
-constexpr long BAUDRATE = 9600;
-constexpr uint8_t rpmPin = 2;
-constexpr uint8_t pwmPin = 3;
-constexpr uint8_t onewireBUS = 4;
+constexpr uint32_t BAUDRATE = 9600;
+constexpr uint32_t PWMfreq = 25000;
+constexpr uint8_t rpmPin = D1; //D1
+constexpr uint8_t pwmPin = D3;
+constexpr uint8_t onewireBUS = D4;
 constexpr uint8_t resolution = 9;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
@@ -24,7 +25,7 @@ volatile uint8_t halfRevs = 0;
 uint8_t lowRPMoverflow = 0;
 unsigned long lastMillis = 0;
 float rpm = 0;
-uint8_t pwm = 79;
+uint8_t pwm = 255;
 
 struct Kalman {
 
@@ -86,44 +87,40 @@ struct PIDcontroller {
     }
 } pid;
 
-void pwm25kHzBegin();
-void timer1_setup();
-void rpmISR();
+IRAM_ATTR void rpmISR();
 void calculateRPM_callback();
 void measureTemp_callback();
 DeviceAddress tempAddr;
 
-//MODBUS setup
-SimpleModbusSlave modbus(slaveID);
-uint16_t regs[numRegs];
-
+ModbusRTU modbus;
 Scheduler ts;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(750, TASK_FOREVER, &measureTemp_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
-void pwmDuty(byte ocrb);
 
 void setup() {
-    //Serial.begin(BAUDRATE);
-    modbus.setup(BAUDRATE);
+    Serial.begin(9600);
+    modbus.begin(&Serial);
+    modbus.slave(slaveID);
+    for (size_t i = 0; i < numRegs; i++)
+        modbus.addHreg(i);
 
     pinMode(rpmPin, INPUT);
     pinMode(pwmPin, OUTPUT);
-    //digitalWrite(pwmPin, pwm);
-    pwm25kHzBegin();
-	pwmDuty(pwm);
-    regs[3] = pwm;
+    analogWriteFreq(PWMfreq);
+    analogWrite(pwmPin, pwm);
+    modbus.Hreg(3, pwm);
 
     attachInterrupt(digitalPinToInterrupt(rpmPin), rpmISR, CHANGE);
 
     ts.init();
     ts.addTask(calculateRPM);
-    ts.addTask(measureTemp);
+    //ts.addTask(measureTemp);
     ts.enableAll();
 
-    ds.begin();
-    regs[6] = -1000;
+    //ds.begin();
+    modbus.Hreg(6, 1000);
     if (ds.getDeviceCount() == 1) {
         ds.getAddress(tempAddr, 0);
         ds.setResolution(tempAddr, resolution);
@@ -134,19 +131,21 @@ void setup() {
 void loop() {
     ts.execute();
 
-    pwm = regs[3];
-    pwmDuty(pwm);
-    modbus.loop(regs, sizeof(regs) / sizeof(regs[0]));
+    pwm = modbus.Hreg(3);
+    analogWrite(pwmPin, pwm);
+
+    modbus.task();
+    yield();
 }
 
-void rpmISR() {
+IRAM_ATTR void rpmISR() {
     halfRevs++;
 }
 
 void measureTemp_callback() {
-    regs[6] = (int)ds.getTempC(tempAddr) * 1000;
+    modbus.Hreg(6, (int)ds.getTempC(tempAddr) * 1000);
     ds.requestTemperatures();
-    regs[7] = measureTemp.getOverrun();
+    //modbus.Hreg(7, measureTemp.getOverrun());
 }
 
 void calculateRPM_callback() {
@@ -154,9 +153,9 @@ void calculateRPM_callback() {
     uint16_t deltaT = currentTime - lastMillis; // overflow handled implicitly @link https://www.gammon.com.au/millis
 
     lastMillis = currentTime;
-    regs[5] = deltaT;
-    regs[4] = halfRevs;
-    //regs[8] = calculateRPM.getStartDelay();
+    modbus.Hreg(5, deltaT);
+    modbus.Hreg(4, halfRevs);
+    //modbus.Hreg(8, calculateRPM.getStartDelay());
 
     //cli();
     // if (halfRevs == 0) {
@@ -167,39 +166,6 @@ void calculateRPM_callback() {
     halfRevs = 0;
     //lowRPMoverflow = 0;
     //sei();
-    regs[1] = RPMfilter.addMeasurement(rpm);
-    regs[2] = rpm;
+    modbus.Hreg(1, RPMfilter.addMeasurement(rpm));
+    modbus.Hreg(2, rpm);
 }
-
-#if defined (__AVR__)
-
-void timer1_setup() {
-    // Setup Timer1 for precise timing
-	TCCR1A = 0; // No comparator, no Waveform generator
-	TCCR1B = (1 << CS10); // clk/1 prescaler for 0.0625us precision
-//	TCCR1B = (1 << CS11); // clk/8 prescaler for 0.5us precision
-	TIMSK1 = 0; // Disable overflow interrupt
-	#ifdef USE_T1_OVERFLOW_COUNT
-		TIMSK1 = 1; // Enable overflow interrupt (only needed for low/high pulses > 32768 ms)
-	#endif
-}
-
-//! @link https://forum.arduino.cc/t/controlling-4pin-fan-with-pwm-25khz/399618/3
-//! @note 25 kHz PWM
-void pwm25kHzBegin() {
-    TCCR2A = 0;                               // TC2 Control Register A
-    TCCR2B = 0;                               // TC2 Control Register B
-    TIMSK2 = 0;                               // TC2 Interrupt Mask Register
-    TIFR2 = 0;                                // TC2 Interrupt Flag Register
-    TCCR2A |= (1 << COM2B1) | (1 << WGM21) | (1 << WGM20);  // OC2B cleared/set on match when up/down counting, fast PWM
-    TCCR2B |= (1 << WGM22) | (1 << CS21);     // prescaler 8
-    OCR2A = 79;                               // TOP overflow value (Hz) 16Mhz / 8 / (79 + 1) = 25Khz
-    OCR2B = 0;
-}
-
-//! @note range = 0-79 = 1.25-100%
-void pwmDuty(byte ocrb) {
-    OCR2B = ocrb;                             // PWM Width (duty)
-}
-
-#endif
