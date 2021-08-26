@@ -32,6 +32,7 @@ constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
 const String mDNS_name = STR(MDNS_NAME);
+const uint16_t port = atoi(STR(PORT));
 
 volatile uint8_t halfRevs = 0;
 uint8_t lowRPMoverflow = 0;
@@ -103,6 +104,7 @@ struct PIDcontroller {
 IRAM_ATTR void rpmISR();
 void calculateRPM_callback();
 void measureTemp_callback();
+void measureVoltages_callback();
 bool setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
 
@@ -111,6 +113,7 @@ ModbusRTU modbus;
 Scheduler ts;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(750, TASK_FOREVER, &measureTemp_callback);
+Task measureVoltages(500, TASK_FOREVER, &measureVoltages_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
 
@@ -141,6 +144,7 @@ void setup() {
     ts.init();
     ts.addTask(calculateRPM);
     //ts.addTask(measureTemp);
+    //ts.addTask(measureVoltages);
     ts.enableAll();
 
     //ds.begin();
@@ -200,6 +204,10 @@ void calculateRPM_callback() {
     modbus.Hreg(2, rpm);
 }
 
+void measureVoltages_callback() {
+    return;
+}
+
 bool setup_wifi(const wifiList* APs, const size_t len) {
 	delay(10);
 	// We start by connecting to a WiFi network
@@ -212,10 +220,7 @@ bool setup_wifi(const wifiList* APs, const size_t len) {
 	WiFi.disconnect(true);
 	delay(200);
 	WiFi.mode(WIFI_STA);
-	// if (!WiFi.getAutoConnect())
-    //     WiFi.setAutoConnect(true);
 
-	//WiFi.begin(ssid, psk);
     for(uint8_t i = 0; i < len; i++)
        wifiMulti.addAP(APs[i].ssid, APlist[i].psk);
 
@@ -248,7 +253,7 @@ void setup_OTA() {
 		//Serial.println("Start updating " + type);
 	});
 
-    ArduinoOTA.setPort(8266);
+    ArduinoOTA.setPort(port);
 	ArduinoOTA.setPasswordHash(pwHash);
 
 	// ArduinoOTA.onEnd([]() {
