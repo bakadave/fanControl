@@ -10,7 +10,8 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <TaskScheduler.h>
-#include <ModbusRTU.h>
+//#include <ModbusRTU.h>
+#include <ModbusIP_ESP8266.h>
 #include "secrets.h"
 
 #define _TASK_TIMECRITICAL
@@ -109,7 +110,8 @@ bool setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
 
 ESP8266WiFiMulti wifiMulti;
-ModbusRTU modbus;
+ModbusIP modbus;
+//ModbusRTU modbus;
 Scheduler ts;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(750, TASK_FOREVER, &measureTemp_callback);
@@ -128,8 +130,8 @@ void setup() {
     MDNS.begin(mDNS_name);
     digitalWrite(ledPin, HIGH);
 
-    modbus.begin(&Serial);
-    modbus.slave(slaveID);
+    //modbus.begin(&Serial);
+    modbus.server();
     for (size_t i = 0; i < numRegs; i++)
         modbus.addHreg(i);
 
