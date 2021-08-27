@@ -2,6 +2,8 @@
     @link https://github.com/cyberponk/PWM_Signal_Analyzer_for_Arduino/blob/master/PWM_Signal_Analyzer_for_Arduino.ino
 */
 
+#define _TASK_TIMECRITICAL
+
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
@@ -13,8 +15,6 @@
 //#include <ModbusRTU.h>
 #include <ModbusIP_ESP8266.h>
 #include "secrets.h"
-
-#define _TASK_TIMECRITICAL
 
 /*! @brief how to receive variables from platformio.ini
     @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
@@ -32,13 +32,11 @@ constexpr uint8_t resolution = 9;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
-const String mDNS_name = STR(MDNS_NAME);
+constexpr char mDNS_name[] = STR(MDNS_NAME);
 const uint16_t port = atoi(STR(PORT));
 
 volatile uint8_t halfRevs = 0;
 uint8_t lowRPMoverflow = 0;
-unsigned long lastMillis = 0;
-float rpm = 0;
 uint8_t pwm = 255;
 DeviceAddress tempAddr;
 
@@ -130,7 +128,6 @@ void setup() {
     MDNS.begin(mDNS_name);
     digitalWrite(ledPin, HIGH);
 
-    //modbus.begin(&Serial);
     modbus.server();
     for (size_t i = 0; i < numRegs; i++)
         modbus.addHreg(i);
@@ -145,17 +142,17 @@ void setup() {
 
     ts.init();
     ts.addTask(calculateRPM);
-    //ts.addTask(measureTemp);
+    ts.addTask(measureTemp);
     //ts.addTask(measureVoltages);
     ts.enableAll();
 
-    //ds.begin();
+    ds.begin();
     modbus.Hreg(6, 1000);
-    // if (ds.getDeviceCount() == 1) {
-    //     ds.getAddress(tempAddr, 0);
-    //     ds.setResolution(tempAddr, resolution);
-    //     ds.requestTemperaturesByAddress(tempAddr);
-    // }
+    if (ds.getDeviceCount() == 1) {
+        ds.getAddress(tempAddr, 0);
+        ds.setResolution(tempAddr, resolution);
+        ds.requestTemperaturesByAddress(tempAddr);
+    }
 
 }
 
@@ -181,41 +178,30 @@ IRAM_ATTR void rpmISR() {
 void measureTemp_callback() {
     modbus.Hreg(6, (int)ds.getTempC(tempAddr) * 1000);
     ds.requestTemperatures();
-    //modbus.Hreg(7, measureTemp.getOverrun());
+    Serial.printf("Measured temperature: %f C\r\n", modbus.Hreg(6));
 }
 
 void calculateRPM_callback() {
-    unsigned long currentTime = millis();
-    uint16_t deltaT = currentTime - lastMillis; // overflow handled implicitly @link https://www.gammon.com.au/millis
-
-    lastMillis = currentTime;
+    float rpm;
+    uint16_t deltaT = RPMcalcPeriodMS + calculateRPM.getStartDelay();
     modbus.Hreg(5, deltaT);
     modbus.Hreg(4, halfRevs);
-    //modbus.Hreg(8, calculateRPM.getStartDelay());
 
-    //cli();
-    // if (halfRevs == 0) {
-    //     lowRPMoverflow++;
-    //     return;
-    // }
     rpm = (halfRevs / ((float)(deltaT /* (1 + lowRPMoverflow)*/) / 1000.0)) * 60.0 / 4;
     halfRevs = 0;
-    //lowRPMoverflow = 0;
-    //sei();
+
     modbus.Hreg(1, RPMfilter.addMeasurement(rpm));
     modbus.Hreg(2, rpm);
+    Serial.printf("Measured RPM: %u Filtered RPM: %u\r\n", rpm, modbus.Hreg(1));
 }
 
 void measureVoltages_callback() {
+    Serial.printf("Measured voltage: %f\r\n", 0.0);
     return;
 }
 
 bool setup_wifi(const wifiList* APs, const size_t len) {
 	delay(10);
-	// We start by connecting to a WiFi network
-	// Serial.println();
-	//Serial.print("Connecting to ");
-	// Serial.println(ssid);
 
 	//settings stolen from Tasmota, supposed to increase reliablity
 	WiFi.persistent(false);
@@ -226,17 +212,22 @@ bool setup_wifi(const wifiList* APs, const size_t len) {
     for(uint8_t i = 0; i < len; i++)
        wifiMulti.addAP(APs[i].ssid, APlist[i].psk);
 
-    // Wait for the Wi-Fi to connect: scan for Wi-Fi networks, and connect to the strongest of the networks above
+    //! Wait for the Wi-Fi to connect: scan for Wi-Fi networks, and connect to the strongest of the networks above
+	Serial.println();
+	Serial.print("Adding SSIDs from the list and connecting to the strongest one.");
+
 	while (wifiMulti.run() != WL_CONNECTED)
         delay(500);
 
 	randomSeed(micros());
 	WiFi.hostname(mDNS_name);
 
-	// Serial.println("");
-	// Serial.println("WiFi connected");
-	// Serial.println("IP address: ");
-	// Serial.println(WiFi.localIP());
+	Serial.println();
+	Serial.println("WiFi connected");
+    Serial.print("SSID: ");
+    Serial.print(WiFi.SSID());
+	Serial.println(" IP address: ");
+	Serial.println(WiFi.localIP());
 
     return true;
 }
@@ -252,34 +243,34 @@ void setup_OTA() {
 		else
 		    type = "filesystem";
 		//! @note if updating FS this would be the place to unmount FS using FS.end()
-		//Serial.println("Start updating " + type);
+		Serial.println("Start updating " + type);
 	});
 
     ArduinoOTA.setPort(port);
 	ArduinoOTA.setPasswordHash(pwHash);
 
-	// ArduinoOTA.onEnd([]() {
-	// 	//Serial.println("\nEnd");
-	// });
+	ArduinoOTA.onEnd([]() {
+		Serial.println("\nEnd");
+	});
 
-	// ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-	// 	//Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-	// });
+	ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+		Serial.printf("Progress: %u%%\r\n", (progress / (total / 100)));
+	});
 
-	// ArduinoOTA.onError([](ota_error_t error) {
-	// 	// //Serial.printf("Error[%u]: ", error);
-	// 	// if (error == OTA_AUTH_ERROR)
-	// 	//     //Serial.println("Auth Failed");
-	// 	// else if (error == OTA_BEGIN_ERROR)
-	// 	//     //Serial.println("Begin Failed");
-	// 	// else if (error == OTA_CONNECT_ERROR)
-    //     //     //Serial.println("Connect Failed");
-	// 	// else if (error == OTA_RECEIVE_ERROR)
-	// 	//     //Serial.println("Receive Failed");
+	ArduinoOTA.onError([](ota_error_t error) {
+		Serial.printf("Error[%u]: ", error);
+		if (error == OTA_AUTH_ERROR)
+		    Serial.println("Auth Failed");
+		else if (error == OTA_BEGIN_ERROR)
+		    Serial.println("Begin Failed");
+		else if (error == OTA_CONNECT_ERROR)
+            Serial.println("Connect Failed");
+		else if (error == OTA_RECEIVE_ERROR)
+		    Serial.println("Receive Failed");
 
-	// 	// else if (error == OTA_END_ERROR)
-	// 	//     //Serial.println("End Failed");
-	// 	});
+		else if (error == OTA_END_ERROR)
+		    Serial.println("End Failed");
+		});
 
 	ArduinoOTA.begin();
 }
