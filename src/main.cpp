@@ -176,7 +176,7 @@ IRAM_ATTR void rpmISR() {
 }
 
 void measureTemp_callback() {
-    modbus.Hreg(6, (int)ds.getTempC(tempAddr) * 1000);
+    modbus.Hreg(5, (int)ds.getTempC(tempAddr) * 1000);
     ds.requestTemperatures();
     Serial.printf("Measured temperature: %f C\r\n", modbus.Hreg(6));
 }
@@ -184,10 +184,10 @@ void measureTemp_callback() {
 void calculateRPM_callback() {
     float rpm;
     uint16_t deltaT = RPMcalcPeriodMS + calculateRPM.getStartDelay();
-    modbus.Hreg(5, deltaT);
-    modbus.Hreg(4, halfRevs);
+    modbus.Hreg(6, deltaT);
+    modbus.Hreg(7, halfRevs);
 
-    rpm = (halfRevs / ((float)(deltaT /* (1 + lowRPMoverflow)*/) / 1000.0)) * 60.0 / 4;
+    rpm = (halfRevs / ((float)deltaT / 1000.0)) * 60.0 / 4;
     halfRevs = 0;
 
     modbus.Hreg(1, RPMfilter.addMeasurement(rpm));
