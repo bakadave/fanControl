@@ -1,5 +1,8 @@
 /*!
     @link https://github.com/cyberponk/PWM_Signal_Analyzer_for_Arduino/blob/master/PWM_Signal_Analyzer_for_Arduino.ino
+
+    @note to self: to enable ArduinOTA through Windows Firewall, temporarily enable "Display a notification to the user when a program is blocked from receiving inbound connections." and allow there.
+    Trying to chase down the python executable is messy otherwise.
 */
 
 #define _TASK_TIMECRITICAL
@@ -26,8 +29,8 @@
 
 constexpr uint32_t BAUDRATE = 9600;
 constexpr uint32_t PWMfreq = 25000;
-constexpr uint8_t rpmPin = D1;
-constexpr uint8_t pwmPin = D3;
+constexpr uint8_t rpmPin = D2;
+constexpr uint8_t pwmPin = D1;
 constexpr uint8_t onewireBUS = D4;
 constexpr uint8_t ledPin = 2;
 constexpr uint8_t resolution = 9;
@@ -38,7 +41,7 @@ constexpr char mDNS_name[] = STR(MDNS_NAME);
 const uint16_t port = atoi(STR(PORT));
 
 volatile uint8_t halfRevs = 0;
-uint16_t pwm = 1023;
+uint16_t pwm = 0;
 uint16_t setPoint_RPM = 0;
 DeviceAddress tempAddr;
 
@@ -46,7 +49,7 @@ struct Kalman {
     private:
     float Pc = 0.0;
     float G = 0.0;
-    float P = 1.0;
+    float P = 1.3;
     float Xp = 0.0;
     float Zp = 0.0;
     float Xe = 0.0;
@@ -67,6 +70,7 @@ struct Kalman {
     }
 };
 
+//! @link https://forum.arduino.cc/t/pid-self-balancing-robot/626526
 struct PIDcontroller {
     private:
     unsigned long previousTime = 0;
@@ -74,22 +78,28 @@ struct PIDcontroller {
     int lastError, cumError;
 
     public:
-    unsigned int Kp = 1;
-    unsigned int Kd = 0.1;
-    unsigned int Ki = 1e-2;
+    float Kp = 0.7;
+    float Ki = 0.03;
+    float Kd = 0.05;
 
-    void init (uint16_t _setPoint) {
-        setPoint = &_setPoint;
+    void init (uint16_t* _setPoint) {
+        setPoint = _setPoint;
     }
 
     uint16_t compute(uint16_t input, unsigned int elapsedTime) {
         int error = *setPoint - input;
-        cumError += error * elapsedTime;
-        int rateError = (error - lastError) / elapsedTime;
+        cumError += error * ((float)elapsedTime/1000);
+        float rateError = (error - lastError) / ((float)elapsedTime/1000);
 
-        uint16_t output = Kp * error + Ki + cumError + Kd * rateError;
+        int16_t output = Kp * error + Ki * cumError + Kd * rateError;
 
         lastError = error;
+
+        output = output < 0 ? 0 : output;
+        output = output > 255 ? 255 : output;
+
+        if (output == 0 && *setPoint != 0)
+            output = 10;
 
         return output;
     }
@@ -108,7 +118,7 @@ Scheduler ts;
 struct Kalman RPMfilter;
 struct PIDcontroller pid;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
-Task measureTemp(750, TASK_FOREVER, &measureTemp_callback);
+Task measureTemp(1000, TASK_FOREVER, &measureTemp_callback);
 Task measureVoltages(500, TASK_FOREVER, &measureVoltages_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
@@ -137,7 +147,7 @@ void setup() {
     attachInterrupt(digitalPinToInterrupt(rpmPin), rpmISR, CHANGE);
 
     //init PID controller for fan RPM
-    pid.init(setPoint_RPM);
+    pid.init(&setPoint_RPM);
     modbus.Hreg(0, setPoint_RPM);
 
     ts.init();
@@ -146,8 +156,11 @@ void setup() {
     //ts.addTask(measureVoltages);
     ts.enableAll();
 
+    modbus.Hreg(6, pid.Kp * 1000);
+    modbus.Hreg(7, pid.Ki * 1000);
+    modbus.Hreg(8, pid.Kd * 1000);
+
     ds.begin();
-    modbus.Hreg(6, 1000);
     if (ds.getDeviceCount() == 1) {
         ds.getAddress(tempAddr, 0);
         ds.setResolution(tempAddr, resolution);
@@ -164,6 +177,8 @@ void loop() {
 
     modbus.task();
     setPoint_RPM = modbus.Hreg(0);
+    //pwm = modbus.Hreg(3);
+    analogWrite(pwmPin, pwm);
     yield();
 }
 
@@ -172,26 +187,27 @@ IRAM_ATTR void rpmISR() {
 }
 
 void measureTemp_callback() {
-    modbus.Hreg(5, (int)ds.getTempC(tempAddr) * 1000);
+    modbus.Hreg(4, (float)(ds.getTempC(tempAddr) * 1000));
     ds.requestTemperatures();
-    Serial.printf("Measured temperature: %f C\r\n", (float)modbus.Hreg(6) / 1000.0);
 }
 
 void calculateRPM_callback() {
     uint8_t _revs = halfRevs;
     halfRevs = 0;
-    float rpm, rpm_f;   //shouldn't be float
+    float rpm;      //TODO shouldn't be float
     uint16_t deltaT = RPMcalcPeriodMS + calculateRPM.getStartDelay();
 
-    modbus.Hreg(6, deltaT);
-    modbus.Hreg(7, _revs);
-
     rpm = (_revs / ((float)deltaT / 1000.0)) * 60.0 / 4;
-    rpm_f = RPMfilter.addMeasurement(rpm);
-    pwm = pid.compute(rpm_f, deltaT);
+    modbus.Hreg(2, rpm);    //raw RPM
+    rpm = RPMfilter.addMeasurement(rpm);
+    modbus.Hreg(1, rpm);    //filtered RPM
 
-    modbus.Hreg(1, rpm_f);
-    modbus.Hreg(2, rpm);
+    pid.Kp = (float)modbus.Hreg(6) / 1000;
+    pid.Ki = (float)modbus.Hreg(7) / 1000;
+    pid.Kd = (float)modbus.Hreg(8) / 1000;
+    modbus.Hreg(9, pid.compute(rpm, deltaT));
+
+    pwm = pid.compute(rpm, deltaT);
     modbus.Hreg(3, pwm);
     Serial.printf("Measured RPM: %u Filtered RPM: %u\r\n", (uint16_t)rpm, modbus.Hreg(1));
 }
