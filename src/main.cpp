@@ -1,7 +1,7 @@
 /*!
     @link https://github.com/cyberponk/PWM_Signal_Analyzer_for_Arduino/blob/master/PWM_Signal_Analyzer_for_Arduino.ino
 
-    @note to self: to enable ArduinOTA through Windows Firewall, temporarily enable "Display a notification to the user when a program is blocked from receiving inbound connections." and allow there.
+    @note to enable ArduinOTA through Windows Firewall, temporarily enable "Display a notification to the user when a program is blocked from receiving inbound connections." and allow there.
     Trying to chase down the python executable is messy otherwise.
 */
 
@@ -78,9 +78,9 @@ struct PIDcontroller {
     int lastError, cumError;
 
     public:
-    float Kp = 0.7;
-    float Ki = 0.03;
-    float Kd = 0.05;
+    float Kp = 1.6;
+    float Ki = 0.06;
+    float Kd = 0.22;
 
     void init (uint16_t* _setPoint) {
         setPoint = _setPoint;
@@ -96,10 +96,10 @@ struct PIDcontroller {
         lastError = error;
 
         output = output < 0 ? 0 : output;
-        output = output > 255 ? 255 : output;
+        output = output > 1023 ? 1023 : output;
 
         if (output == 0 && *setPoint != 0)
-            output = 10;
+            output = 20;
 
         return output;
     }
@@ -118,7 +118,7 @@ Scheduler ts;
 struct Kalman RPMfilter;
 struct PIDcontroller pid;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
-Task measureTemp(1000, TASK_FOREVER, &measureTemp_callback);
+Task measureTemp(5000, TASK_FOREVER, &measureTemp_callback);
 Task measureVoltages(500, TASK_FOREVER, &measureVoltages_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
@@ -141,6 +141,7 @@ void setup() {
     pinMode(rpmPin, INPUT);
     pinMode(pwmPin, OUTPUT);
     analogWriteFreq(PWMfreq);
+    analogWriteResolution(10);  /*! @link https://github.com/esp8266/Arduino/pull/7456 */
     analogWrite(pwmPin, pwm);
     modbus.Hreg(3, pwm);
 
@@ -205,8 +206,8 @@ void calculateRPM_callback() {
     pid.Kp = (float)modbus.Hreg(6) / 1000;
     pid.Ki = (float)modbus.Hreg(7) / 1000;
     pid.Kd = (float)modbus.Hreg(8) / 1000;
-    modbus.Hreg(9, pid.compute(rpm, deltaT));
 
+    modbus.Hreg(9, pid.compute(rpm, deltaT));
     pwm = pid.compute(rpm, deltaT);
     modbus.Hreg(3, pwm);
     Serial.printf("Measured RPM: %u Filtered RPM: %u\r\n", (uint16_t)rpm, modbus.Hreg(1));
