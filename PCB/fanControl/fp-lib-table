@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name fanControl)(type KiCad)(uri C:/Users/bakad/source/repos/fanControl/PCB/fanControl/library)(options "")(descr ""))
+)

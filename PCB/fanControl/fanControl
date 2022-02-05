@@ -1,0 +1,63 @@
+Source,C:\Users\bakad\source\repos\fanControl\PCB\fanControl\fanControl.sch
+Kicad Rev,Eeschema (5.1.5)-3
+Generated Date,26/01/2022 20:16:05
+
+Title,Not Set
+Company,Not Set
+Revision,Not Set
+Date Issue,Not Set
+
+Reference,Value,URL,Manufacturer,PartNo,Comment,MPN,Library,Library Ref
+J3,Conn_01x04,Connector_Generic,Conn_01x04
+R9,1k,Device,R
+R5,1k,Device,R
+U1,LM2575BT-ADJ,Regulator_Switching,LM2575BT-ADJ
+Q1,BC547,Transistor_BJT,BC547
+D4,1N5817,https://hu.mouser.com/c/semiconductors/discrete-semiconductors/diodes-rectifiers/schottky-diodes-rectifiers/?configuration=Single&if%20-%20forward%20current=1%20A~~1.2%20A&mounting%20style=SMD%2FSMT&product=Schottky%20Diodes&vrrm%20-%20repetitive%20reverse%20voltage=40%20V%7C~50%20V%7C~60%20V&instock=y&rp=semiconductors%2Fdiscrete-semiconductors%2Fdiodes-rectifiers%2Fschottky-diodes-rectifiers%7C~If%20-%20Forward%20Current,,,,,Diode,1N5819
+R3,10k,Device,R
+C1,47u,Device,CP
+R10,1k1 1%,Device,R
+R11,3k3 1%,Device,R
+R6,47k,Device,R
+C2,470u,Device,CP
+R12,1k 1%,Device,R
+RV1,R_POT_TRIM,Device,R_POT_TRIM
+D3,BZX84C6V8L,,onsemi,BZX84C6V8LT3G,,,Diode,ZYxxx
+R4,10k,Device,R
+U2,DS18B20,Sensor_Temperature,DS18B20
+R13,4k7,Device,R
+R1,6k8,Device,R
+R2,2k,Device,R
+Q2,IRF540N,,MCC,SI2324A-TP,,,Transistor_FET,IRF540N
+R7,1k,Device,R
+J2,USB_B_Micro,Connector,USB_B_Micro
+R14,6k8,Device,R
+R15,10k,Device,R
+J4,Conn_01x03,Connector_Generic,Conn_01x03
+J1,Barrel_Jack_Switch,Connector,Barrel_Jack_Switch
+D6,1N5819,https://hu.mouser.com/c/semiconductors/discrete-semiconductors/diodes-rectifiers/schottky-diodes-rectifiers/?configuration=Single&if%20-%20forward%20current=1%20A~~1.2%20A&mounting%20style=SMD%2FSMT&product=Schottky%20Diodes&vrrm%20-%20repetitive%20reverse%20voltage=40%20V%7C~50%20V%7C~60%20V&instock=y&rp=semiconductors%2Fdiscrete-semiconductors%2Fdiodes-rectifiers%2Fschottky-diodes-rectifiers%7C~If%20-%20Forward%20Current,,,,,Diode,1N5819
+D7,1N5819,https://hu.mouser.com/c/semiconductors/discrete-semiconductors/diodes-rectifiers/schottky-diodes-rectifiers/?configuration=Single&if%20-%20forward%20current=1%20A~~1.2%20A&mounting%20style=SMD%2FSMT&product=Schottky%20Diodes&vrrm%20-%20repetitive%20reverse%20voltage=40%20V%7C~50%20V%7C~60%20V&instock=y&rp=semiconductors%2Fdiscrete-semiconductors%2Fdiodes-rectifiers%2Fschottky-diodes-rectifiers%7C~If%20-%20Forward%20Current,,,,,Diode,1N5819
+D1,1N5819,https://hu.mouser.com/c/semiconductors/discrete-semiconductors/diodes-rectifiers/schottky-diodes-rectifiers/?configuration=Single&if%20-%20forward%20current=1%20A~~1.2%20A&mounting%20style=SMD%2FSMT&product=Schottky%20Diodes&vrrm%20-%20repetitive%20reverse%20voltage=40%20V%7C~50%20V%7C~60%20V&instock=y&rp=semiconductors%2Fdiscrete-semiconductors%2Fdiodes-rectifiers%2Fschottky-diodes-rectifiers%7C~If%20-%20Forward%20Current,,,,,Diode,1N5819
+D2,1N5819,https://hu.mouser.com/c/semiconductors/discrete-semiconductors/diodes-rectifiers/schottky-diodes-rectifiers/?configuration=Single&if%20-%20forward%20current=1%20A~~1.2%20A&mounting%20style=SMD%2FSMT&product=Schottky%20Diodes&vrrm%20-%20repetitive%20reverse%20voltage=40%20V%7C~50%20V%7C~60%20V&instock=y&rp=semiconductors%2Fdiscrete-semiconductors%2Fdiodes-rectifiers%2Fschottky-diodes-rectifiers%7C~If%20-%20Forward%20Current,,,,,Diode,1N5819
+U5,LD1117S33TR_SOT223,Regulator_Linear,LD1117S33TR_SOT223
+C3,100n,agro-symbol,CAP
+C4,10u,,Vishay,293D106X9016A2TE3,,,Device,CP
+U4,ESP-12E,ESP8266,ESP-12E
+R8,100k,Device,R
+C5,100n,agro-symbol,CAP
+JP2,SolderJumper_2_Open,,,,RESET,,Jumper,SolderJumper_2_Open
+J5,Conn_01x06,Connector_Generic,Conn_01x06
+R22,470R,Device,R
+R19,10k,Device,R
+JP1,SolderJumper_2_Open,Jumper,SolderJumper_2_Open
+R21,10k,Device,R
+R20,10k,Device,R
+R16,10k,Device,R
+R18,10k,Device,R
+R17,470R,Device,R
+L1,470u,https://arwill.hu/termekek/passziv-alkatreszek/induktivitasok/radialis/470uh-1-2a-induktivitas-659003/,,,,,agro-symbol,INDUCTOR
+D8,MBRS140,,onsemi,,,MBRS140T3G,Diode,1N5819
+Q3,FDD4243,,onsemi,,,,Transistor_FET,DMP3013SFV
+R23,1k,Device,R
+D9,BZX84C10L,,onsemi,BZX84C10L,,,Diode,ZYxxx
+D5,MBRS140,,onsemi,,,MBRS140T3G,Diode,1N5819
