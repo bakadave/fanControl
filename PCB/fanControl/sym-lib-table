@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name fanControl)(type Legacy)(uri ${KIPRJMOD}/fanControl.lib)(options "")(descr ""))
-)
