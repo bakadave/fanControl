@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "library")(type "KiCad")(uri "C:/Users/bakad/source/repos/fanControl/PCB/fanControl")(options "")(descr ""))
+  (lib (name "fanControl")(type "KiCad")(uri "${KIPRJMOD}/library/fanControl.pretty")(options "")(descr ""))
+)
