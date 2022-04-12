@@ -1,0 +1,88 @@
+Questionable use of curly braces in "b§v2 psu_en 0 v{if(v(s)>7,5.5,0)}"
+    Error: undefined symbol in: "if([v](s)>7,5.5,0)"
+Circuit: * C:\Users\bakad\source\repos\fanControl\PCB\Vin_mon_WCA.asc
+
+WARNING: Less than two connections to node STEPPING.  This node is used by V3.
+.step stepping=-1
+.step stepping=0
+.step stepping=1
+.step stepping=2
+.step stepping=3
+.step stepping=4
+.step stepping=5
+.step stepping=6
+.step stepping=7
+.step stepping=8
+.step stepping=9
+.step stepping=10
+.step stepping=11
+.step stepping=12
+.step stepping=13
+.step stepping=14
+.step stepping=15
+.step stepping=16
+.step stepping=17
+.step stepping=18
+.step stepping=19
+.step stepping=20
+.step stepping=21
+.step stepping=22
+.step stepping=23
+.step stepping=24
+.step stepping=25
+.step stepping=26
+.step stepping=27
+.step stepping=28
+.step stepping=29
+.step stepping=30
+.step stepping=31
+.step stepping=32
+.step stepping=33
+.step stepping=34
+.step stepping=35
+.step stepping=36
+.step stepping=37
+.step stepping=38
+.step stepping=39
+.step stepping=40
+.step stepping=41
+.step stepping=42
+.step stepping=43
+.step stepping=44
+.step stepping=45
+.step stepping=46
+.step stepping=47
+.step stepping=48
+.step stepping=49
+.step stepping=50
+.step stepping=51
+.step stepping=52
+.step stepping=53
+.step stepping=54
+.step stepping=55
+.step stepping=56
+.step stepping=57
+.step stepping=58
+.step stepping=59
+.step stepping=60
+.step stepping=61
+.step stepping=62
+.step stepping=63
+
+Date: Tue Apr 12 22:18:07 2022
+Total elapsed time: 8.922 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 861
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 19
+fillins = 0
+solver = Normal
+Matrix Compiler1: 1018 bytes object code size  0.5/0.3/[0.3]
+Matrix Compiler2: 1.41 KB object code size  0.4/0.4/[0.2]
+

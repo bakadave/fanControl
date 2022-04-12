@@ -20,6 +20,7 @@
 
 /*! @brief how to receive variables from platformio.ini
     @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
+    @link ESP-12E pinout https://github.com/r00tGER/NodeMCU-ESP12E-pinouts
 */
 #define ST(A) #A
 #define STR(A) ST(A)
@@ -29,10 +30,12 @@
 
 constexpr uint32_t BAUDRATE = 9600;
 constexpr uint32_t PWMfreq = 25000;
-constexpr uint8_t rpmPin = D2;
-constexpr uint8_t pwmPin = D1;
-constexpr uint8_t onewireBUS = D4;
-constexpr uint8_t ledPin = 2;
+constexpr uint8_t rpmPin = D6;      //GPIO12
+constexpr uint8_t pwmPin = D7;      //GPIO13
+constexpr uint8_t onewireBUS = D2;  //GPIO4
+constexpr uint8_t PowEn = D5;       //GPIO14
+constexpr uint8_t USBpin = D1;      //GPIO5
+constexpr uint8_t Vmon = A0;        //ADC
 constexpr uint8_t resolution = 9;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
@@ -78,9 +81,9 @@ struct PIDcontroller {
     int lastError, cumError;
 
     public:
-    float Kp = 1.6;
-    float Ki = 0.06;
-    float Kd = 0.22;
+    float Kp = 1.0;
+    float Ki = 1.00;
+    float Kd = 0.1;
 
     void init (uint16_t* _setPoint) {
         setPoint = _setPoint;
@@ -109,6 +112,7 @@ IRAM_ATTR void rpmISR();
 void calculateRPM_callback();
 void measureTemp_callback();
 void measureVoltages_callback();
+void USBsense_callback();
 bool setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
 
@@ -120,32 +124,33 @@ struct PIDcontroller pid;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(5000, TASK_FOREVER, &measureTemp_callback);
 Task measureVoltages(500, TASK_FOREVER, &measureVoltages_callback);
+Task USBsense(500, TASK_FOREVER, &USBsense_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
 
 void setup() {
-    pinMode(ledPin, OUTPUT);
-    digitalWrite(ledPin, LED_ON);
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LED_ON);
+    pinMode(rpmPin, INPUT);
+    pinMode(pwmPin, OUTPUT);
+    pinMode(Vmon, INPUT);
+    pinMode(USBpin, INPUT);
+    analogWriteFreq(PWMfreq);
+    analogWriteResolution(10);  /*! @link https://github.com/esp8266/Arduino/pull/7456 */
+    analogWrite(pwmPin, pwm);
+    attachInterrupt(digitalPinToInterrupt(rpmPin), rpmISR, CHANGE);
 
     Serial.begin(9600);
 
     setup_wifi(APlist, APlen);
     setup_OTA();
     MDNS.begin(mDNS_name);
-    digitalWrite(ledPin, LED_OFF);
+    digitalWrite(LED_BUILTIN, LED_OFF);
 
     modbus.server();
     for (size_t i = 0; i < numRegs; i++)
         modbus.addHreg(i);
-
-    pinMode(rpmPin, INPUT);
-    pinMode(pwmPin, OUTPUT);
-    analogWriteFreq(PWMfreq);
-    analogWriteResolution(10);  /*! @link https://github.com/esp8266/Arduino/pull/7456 */
-    analogWrite(pwmPin, pwm);
     modbus.Hreg(3, pwm);
-
-    attachInterrupt(digitalPinToInterrupt(rpmPin), rpmISR, CHANGE);
 
     //init PID controller for fan RPM
     pid.init(&setPoint_RPM);
@@ -153,19 +158,21 @@ void setup() {
 
     ts.init();
     ts.addTask(calculateRPM);
-    ts.addTask(measureTemp);
     //ts.addTask(measureVoltages);
+    ts.addTask(USBsense);
     ts.enableAll();
 
-    modbus.Hreg(6, pid.Kp * 1000);
-    modbus.Hreg(7, pid.Ki * 1000);
-    modbus.Hreg(8, pid.Kd * 1000);
+    modbus.Hreg(5, pid.Kp * 1000);
+    modbus.Hreg(6, pid.Ki * 1000);
+    modbus.Hreg(7, pid.Kd * 1000);
+    modbus.Hreg(9, 2);
 
     ds.begin();
     if (ds.getDeviceCount() == 1) {
         ds.getAddress(tempAddr, 0);
         ds.setResolution(tempAddr, resolution);
         ds.requestTemperaturesByAddress(tempAddr);
+        ts.addTask(measureTemp);
     }
 
 }
@@ -195,7 +202,7 @@ void measureTemp_callback() {
 void calculateRPM_callback() {
     uint8_t _revs = halfRevs;
     halfRevs = 0;
-    float rpm;      //TODO shouldn't be float
+    float rpm;              //TODO shouldn't be float
     uint16_t deltaT = RPMcalcPeriodMS + calculateRPM.getStartDelay();
 
     rpm = (_revs / ((float)deltaT / 1000.0)) * 60.0 / 4;
@@ -207,7 +214,7 @@ void calculateRPM_callback() {
     pid.Ki = (float)modbus.Hreg(7) / 1000;
     pid.Kd = (float)modbus.Hreg(8) / 1000;
 
-    modbus.Hreg(9, pid.compute(rpm, deltaT));
+    modbus.Hreg(8, pid.compute(rpm, deltaT));
     pwm = pid.compute(rpm, deltaT);
     modbus.Hreg(3, pwm);
     Serial.printf("Measured RPM: %u Filtered RPM: %u\r\n", (uint16_t)rpm, modbus.Hreg(1));
@@ -215,6 +222,12 @@ void calculateRPM_callback() {
 
 void measureVoltages_callback() {
     Serial.printf("Measured voltage: %f\r\n", 0.0);
+    return;
+}
+
+void USBsense_callback() {
+    int val = digitalRead(USBpin);
+    modbus.Hreg(9, val);
     return;
 }
 
