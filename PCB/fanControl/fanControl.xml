@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\bakad\source\repos\fanControl\PCB\fanControl\fanControl.kicad_sch</source>
-    <date>23/02/2022 11:37:25</date>
+    <date>15/04/2022 11:39:48</date>
     <tool>Eeschema (6.0.1)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -122,17 +122,17 @@
     <comp ref="C6">
       <value>100n</value>
       <footprint>agro-footprint:CAP_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/2006011836_YAGEO-CC0805GRNPO9BN220_C520058.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810101813_YAGEO-CC0805KRX7R9BB104_C49678.pdf</datasheet>
       <fields>
-        <field name="LCSC">C520058</field>
-        <field name="MPN">CC0805GRNPO9BN220</field>
+        <field name="LCSC">C49678</field>
+        <field name="MPN">CC0805KRX7R9BB104</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="agro-symbol" part="CAP" description=""/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="CC0805GRNPO9BN220"/>
-      <property name="LCSC" value="C520058"/>
+      <property name="MPN" value="CC0805KRX7R9BB104"/>
+      <property name="LCSC" value="C49678"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
@@ -142,17 +142,17 @@
     <comp ref="C7">
       <value>100n</value>
       <footprint>agro-footprint:CAP_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/2006011836_YAGEO-CC0805GRNPO9BN220_C520058.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810101813_YAGEO-CC0805KRX7R9BB104_C49678.pdf</datasheet>
       <fields>
-        <field name="LCSC">C520058</field>
-        <field name="MPN">CC0805GRNPO9BN220</field>
+        <field name="LCSC">C49678</field>
+        <field name="MPN">CC0805KRX7R9BB104</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="agro-symbol" part="CAP" description=""/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="CC0805GRNPO9BN220"/>
-      <property name="LCSC" value="C520058"/>
+      <property name="MPN" value="CC0805KRX7R9BB104"/>
+      <property name="LCSC" value="C49678"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
@@ -195,39 +195,39 @@
       <tstamps>00000000-0000-0000-0000-000062316e5a</tstamps>
     </comp>
     <comp ref="C10">
-      <value>100n</value>
-      <footprint>agro-footprint:CAP_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/2006011836_YAGEO-CC0805GRNPO9BN220_C520058.pdf</datasheet>
+      <value>10u 10V</value>
+      <footprint>Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A_Pad1.58x1.35mm_HandSolder</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2011031906_KEMET-T529P106M010AAE200_C696821.pdf</datasheet>
       <fields>
-        <field name="LCSC">C520058</field>
-        <field name="MPN">CC0805GRNPO9BN220</field>
-        <field name="Manufacturer">Yageo</field>
+        <field name="LCSC">C696821</field>
+        <field name="MPN">T529P106M010AAE200</field>
+        <field name="Manufacturer">KEMET</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="agro-symbol" part="CAP" description=""/>
-      <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="CC0805GRNPO9BN220"/>
-      <property name="LCSC" value="C520058"/>
+      <libsource lib="Device" part="CP" description=""/>
+      <property name="Manufacturer" value="KEMET"/>
+      <property name="MPN" value="T529P106M010AAE200"/>
+      <property name="LCSC" value="C696821"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>033af1d1-5002-4125-b6a7-4694595eda9b</tstamps>
+      <tstamps>64d640da-5820-49d8-b3ce-315c1dbf5dfe</tstamps>
     </comp>
     <comp ref="C11">
       <value>100n</value>
       <footprint>agro-footprint:CAP_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/2006011836_YAGEO-CC0805GRNPO9BN220_C520058.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810101813_YAGEO-CC0805KRX7R9BB104_C49678.pdf</datasheet>
       <fields>
-        <field name="LCSC">C520058</field>
-        <field name="MPN">CC0805GRNPO9BN220</field>
+        <field name="LCSC">C49678</field>
+        <field name="MPN">CC0805KRX7R9BB104</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="agro-symbol" part="CAP" description=""/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="CC0805GRNPO9BN220"/>
-      <property name="LCSC" value="C520058"/>
+      <property name="MPN" value="CC0805KRX7R9BB104"/>
+      <property name="LCSC" value="C49678"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
@@ -253,6 +253,46 @@
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>00000000-0000-0000-0000-00006203ea1e</tstamps>
+    </comp>
+    <comp ref="C13">
+      <value>10n 50V</value>
+      <footprint>agro-footprint:CAP_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2005262134_YAGEO-CC0805JKNPO9BN103_C527201.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C527201</field>
+        <field name="MPN">CC0805JKNPO9BN103</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="agro-symbol" part="CAP" description=""/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="CC0805JKNPO9BN103"/>
+      <property name="LCSC" value="C527201"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9c113afa-3288-4f73-8ed0-d53d7dda48d0</tstamps>
+    </comp>
+    <comp ref="C14">
+      <value>10n 50V</value>
+      <footprint>agro-footprint:CAP_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2005262134_YAGEO-CC0805JKNPO9BN103_C527201.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C527201</field>
+        <field name="MPN">CC0805JKNPO9BN103</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="agro-symbol" part="CAP" description=""/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="CC0805JKNPO9BN103"/>
+      <property name="LCSC" value="C527201"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>580a894f-91fc-4026-8951-fc9afcd3b0fc</tstamps>
     </comp>
     <comp ref="D1">
       <value>SMCJ36CA</value>
@@ -295,19 +335,19 @@
       <tstamps>00000000-0000-0000-0000-000062433e5f</tstamps>
     </comp>
     <comp ref="D3">
-      <value>MMSZ3V0</value>
-      <footprint>Diode_SMD:D_SOD-123</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1807270934_Tak-Cheong-MMSZ3V0CW_C248751.pdf</datasheet>
+      <value>BZX84C3V3</value>
+      <footprint>Diode_SMD:D_SOT-23_ANK</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301522_onsemi-BZX84C3V3LT1G_C82473.pdf</datasheet>
       <fields>
-        <field name="LCSC">C248751</field>
-        <field name="MPN">MMSZ3V0CW</field>
-        <field name="Manufacturer">Tak Cheong</field>
+        <field name="LCSC">C82473</field>
+        <field name="MPN">BZX84C3V3LT1G</field>
+        <field name="Manufacturer">onsemi</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="agro-symbol" part="ZENER" description=""/>
-      <property name="Manufacturer" value="Tak Cheong"/>
-      <property name="MPN" value="MMSZ3V0CW"/>
-      <property name="LCSC" value="C248751"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="BZX84C3V3LT1G"/>
+      <property name="LCSC" value="C82473"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
@@ -335,24 +375,24 @@
       <tstamps>00000000-0000-0000-0000-0000618983ee</tstamps>
     </comp>
     <comp ref="D5">
-      <value>MMSZ3V0</value>
-      <footprint>Diode_SMD:D_SOD-123</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1807270934_Tak-Cheong-MMSZ3V0CW_C248751.pdf</datasheet>
+      <value>BZX84C3V3</value>
+      <footprint>Diode_SMD:D_SOT-23_ANK</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301522_onsemi-BZX84C3V3LT1G_C82473.pdf</datasheet>
       <fields>
-        <field name="LCSC">C248751</field>
-        <field name="MPN">MMSZ3V0CW</field>
-        <field name="Manufacturer">Tak Cheong</field>
+        <field name="LCSC">C82473</field>
+        <field name="MPN">BZX84C3V3LT1G</field>
+        <field name="Manufacturer">onsemi</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="agro-symbol" part="ZENER" description=""/>
-      <property name="Manufacturer" value="Tak Cheong"/>
-      <property name="MPN" value="MMSZ3V0CW"/>
-      <property name="LCSC" value="C248751"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="BZX84C3V3LT1G"/>
+      <property name="LCSC" value="C82473"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>959af6a8-9208-41b5-8f9c-1580e8454324</tstamps>
+      <tstamps>1d93557e-90f0-43e5-8918-4b7d06bc576d</tstamps>
     </comp>
     <comp ref="D6">
       <value>RB160M</value>
@@ -360,13 +400,13 @@
       <datasheet>https://datasheet.lcsc.com/lcsc/1810131621_ROHM-Semicon-RB160M-40TR_C123003.pdf</datasheet>
       <fields>
         <field name="LCSC">C123003</field>
-        <field name="MPN">RB160MM-40TR</field>
+        <field name="MPN">RB160M-40TR</field>
         <field name="Manufacturer">Rohm Semiconductor</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Diode" part="1N5819" description="40V 1A Schottky Barrier Rectifier Diode, DO-41"/>
       <property name="Manufacturer" value="Rohm Semiconductor"/>
-      <property name="MPN" value="RB160MM-40TR"/>
+      <property name="MPN" value="RB160M-40TR"/>
       <property name="LCSC" value="C123003"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
@@ -384,7 +424,7 @@
         <field name="Manufacturer">Vishay</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="Diode" part="1N5819" description="40V 1A Schottky Barrier Rectifier Diode, DO-41"/>
+      <libsource lib="agro-symbol" part="SCHOTTKY" description="Schottky diode, small symbol"/>
       <property name="Manufacturer" value="Vishay"/>
       <property name="MPN" value="VS-10BQ015-M3/5BT"/>
       <property name="LCSC" value="C413466"/>
@@ -414,6 +454,26 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>00000000-0000-0000-0000-0000630396fb</tstamps>
     </comp>
+    <comp ref="D9">
+      <value>CUS10S30</value>
+      <footprint>Diode_SMD:D_SOD-323_HandSoldering</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810181811_TOSHIBA-CUS10S30-H3F_C146335.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C146335</field>
+        <field name="MPN">CUS10S30,H3F</field>
+        <field name="Manufacturer">Toshiba</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="agro-symbol" part="SCHOTTKY" description="Schottky diode, small symbol"/>
+      <property name="Manufacturer" value="Toshiba"/>
+      <property name="MPN" value="CUS10S30,H3F"/>
+      <property name="LCSC" value="C146335"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0484ce34-5935-4aa8-8e45-6b9a201be94d</tstamps>
+    </comp>
     <comp ref="J1">
       <value>USB_B_Micro</value>
       <footprint>Connector_USB:USB_Micro-B_Molex-105017-0001</footprint>
@@ -436,14 +496,19 @@
     </comp>
     <comp ref="J2">
       <value>Barrel_Jack_Switch</value>
-      <footprint>fanControl:BarrelJack_Wuerth_6941xx301002</footprint>
+      <footprint>Connector_BarrelJack:BarrelJack_GCT_DCJ200-10-A_Horizontal</footprint>
+      <datasheet>https://www.we-online.com/katalog/datasheet/694106301002.pdf</datasheet>
       <fields>
+        <field name="MPN">694106301002</field>
+        <field name="Manufacturer">Wuerth</field>
         <field name="Supplier">Árwill</field>
         <field name="URL">https://arwill.hu/termekek/csatlakozok/tap/dc/dc-tap-aljzat-5-5-2-1-586196/</field>
       </fields>
       <libsource lib="Connector" part="Barrel_Jack_Switch" description="DC Barrel Jack with an internal switch"/>
       <property name="URL" value="https://arwill.hu/termekek/csatlakozok/tap/dc/dc-tap-aljzat-5-5-2-1-586196/"/>
       <property name="Supplier" value="Árwill"/>
+      <property name="Manufacturer" value="Wuerth"/>
+      <property name="MPN" value="694106301002"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -466,7 +531,7 @@
     </comp>
     <comp ref="Q1">
       <value>FDD4243</value>
-      <footprint>fanControl:TO-252-2_TabPin5</footprint>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
       <datasheet>https://datasheet.lcsc.com/lcsc/2007231308_VBsemi-Elec-FDD4243_C709958.pdf</datasheet>
       <fields>
         <field name="LCSC">C709958</field>
@@ -474,7 +539,7 @@
         <field name="Manufacturer">VBsemi Elec</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="Transistor_FET" part="DMP3013SFV" description="-12A Id, -30V Vds, P-Channel Power MOSFET, 9.5mOhm Ron, 33.7nC Qg (typ), PowerDI3333-8"/>
+      <libsource lib="Device" part="Q_PMOS_GDS" description="P-MOSFET transistor, gate/drain/source"/>
       <property name="Manufacturer" value="VBsemi Elec"/>
       <property name="MPN" value="FDD4243"/>
       <property name="LCSC" value="C709958"/>
@@ -482,87 +547,167 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-0000623a5860</tstamps>
+      <tstamps>e7a89493-11fd-43a8-99d2-4470c1021251</tstamps>
     </comp>
     <comp ref="Q2">
-      <value>BSS169</value>
+      <value>BSS84</value>
       <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810261812_Infineon-Technologies-BSS169H6327_C83053.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1808281643_Infineon-Technologies-BSS84PH6327_C152212.pdf</datasheet>
       <fields>
-        <field name="LCSC">C83053</field>
-        <field name="MPN">BSS169H6327</field>
+        <field name="LCSC">C152212</field>
+        <field name="MPN">BSS84PH6327</field>
         <field name="Manufacturer">Infineon</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="Device" part="Q_NMOS_GSD" description="N-MOSFET transistor, gate/source/drain"/>
+      <libsource lib="Device" part="Q_PMOS_GSD" description="P-MOSFET transistor, gate/source/drain"/>
       <property name="Manufacturer" value="Infineon"/>
-      <property name="MPN" value="BSS169H6327"/>
-      <property name="LCSC" value="C83053"/>
+      <property name="MPN" value="BSS84PH6327"/>
+      <property name="LCSC" value="C152212"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000061f69a00</tstamps>
+      <tstamps>de180ffc-3a6e-4a65-ab2c-90a4360b215c</tstamps>
     </comp>
     <comp ref="Q4">
-      <value>BC847BDW1</value>
-      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810010214_onsemi-BC847BDW1T1G_C82368.pdf</datasheet>
+      <value>BC847B</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301520_onsemi-BC847BLT1G_C94393.pdf</datasheet>
       <fields>
-        <field name="LCSC">C82368</field>
-        <field name="MPN">BC847BDW1T1G</field>
+        <field name="LCSC">C94393</field>
+        <field name="MPN">BC847BLT1G</field>
         <field name="Manufacturer">onsemi</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="Transistor_BJT" part="BC847BDW1" description="100mA IC, 45V Vce, Dual NPN/NPN Transistors, SOT-363"/>
+      <libsource lib="Transistor_BJT" part="BC847" description="0.1A Ic, 45V Vce, NPN Transistor, SOT-23"/>
       <property name="Manufacturer" value="onsemi"/>
-      <property name="MPN" value="BC847BDW1T1G"/>
-      <property name="LCSC" value="C82368"/>
+      <property name="MPN" value="BC847BLT1G"/>
+      <property name="LCSC" value="C94393"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-0000627d4835 00000000-0000-0000-0000-0000627d3595</tstamps>
+      <tstamps>d11f89c8-b1ee-4c84-80c6-60e1be51e0d8</tstamps>
     </comp>
     <comp ref="Q5">
-      <value>BSS169</value>
+      <value>BC847B</value>
       <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810261812_Infineon-Technologies-BSS169H6327_C83053.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301520_onsemi-BC847BLT1G_C94393.pdf</datasheet>
       <fields>
-        <field name="LCSC">C83053</field>
-        <field name="MPN">BSS169H6327</field>
+        <field name="LCSC">C94393</field>
+        <field name="MPN">BC847BLT1G</field>
+        <field name="Manufacturer">onsemi</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC847" description="0.1A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="BC847BLT1G"/>
+      <property name="LCSC" value="C94393"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5b7c65c4-d990-4b03-97a8-beef9341246e</tstamps>
+    </comp>
+    <comp ref="Q6">
+      <value>DMP4065</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1912111437_Diodes-Incorporated-DMP4065S-7_C182476.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C182476</field>
+        <field name="MPN">DMP4065S-7</field>
+        <field name="Manufacturer">Diodes Incorporated </field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="Q_PMOS_GSD" description="P-MOSFET transistor, gate/source/drain"/>
+      <property name="Manufacturer" value="Diodes Incorporated "/>
+      <property name="MPN" value="DMP4065S-7"/>
+      <property name="LCSC" value="C182476"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>96759a87-e5f8-4f81-bb98-3605cda951e9</tstamps>
+    </comp>
+    <comp ref="Q7">
+      <value>BC847B</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301520_onsemi-BC847BLT1G_C94393.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C94393</field>
+        <field name="MPN">BC847BLT1G</field>
+        <field name="Manufacturer">onsemi</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC847" description="0.1A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="BC847BLT1G"/>
+      <property name="LCSC" value="C94393"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6107bea0-aeb6-484f-bec5-0324e269f044</tstamps>
+    </comp>
+    <comp ref="Q8">
+      <value>BSS84</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1808281643_Infineon-Technologies-BSS84PH6327_C152212.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C152212</field>
+        <field name="MPN">BSS84PH6327</field>
         <field name="Manufacturer">Infineon</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="Device" part="Q_NMOS_GSD" description="N-MOSFET transistor, gate/source/drain"/>
+      <libsource lib="Device" part="Q_PMOS_GSD" description="P-MOSFET transistor, gate/source/drain"/>
       <property name="Manufacturer" value="Infineon"/>
-      <property name="MPN" value="BSS169H6327"/>
-      <property name="LCSC" value="C83053"/>
+      <property name="MPN" value="BSS84PH6327"/>
+      <property name="LCSC" value="C152212"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>db85fc7b-8e7e-46d4-8bf4-c9d021dd4ff4</tstamps>
+      <tstamps>74fd8752-80e4-4d7c-a6fb-0f823470b496</tstamps>
     </comp>
-    <comp ref="Q6">
-      <value>BRCS4484</value>
-      <footprint>fanControl:BRCS4484</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/2012021739_Foshan-Blue-Rocket-Elec-BRCS4484SC_C914060.pdf</datasheet>
+    <comp ref="Q9">
+      <value>BC847B</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301520_onsemi-BC847BLT1G_C94393.pdf</datasheet>
       <fields>
-        <field name="LCSC">C914060</field>
-        <field name="MPN">BRCS4484SC</field>
-        <field name="Manufacturer">Foshan Blue Rocket Elec </field>
+        <field name="LCSC">C94393</field>
+        <field name="MPN">BC847BLT1G</field>
+        <field name="Manufacturer">onsemi</field>
         <field name="Supplier">LCSC</field>
       </fields>
-      <libsource lib="Transistor_FET" part="IRF540N" description="33A Id, 100V Vds, HEXFET N-Channel MOSFET, TO-220"/>
-      <property name="Manufacturer" value="Foshan Blue Rocket Elec "/>
-      <property name="MPN" value="BRCS4484SC"/>
-      <property name="LCSC" value="C914060"/>
+      <libsource lib="Transistor_BJT" part="BC847" description="0.1A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="BC847BLT1G"/>
+      <property name="LCSC" value="C94393"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000061e3e93e</tstamps>
+      <tstamps>ef977821-07a2-4f18-b82c-22e21a9b80d9</tstamps>
+    </comp>
+    <comp ref="Q10">
+      <value>BC847B</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810301520_onsemi-BC847BLT1G_C94393.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C94393</field>
+        <field name="MPN">BC847BLT1G</field>
+        <field name="Manufacturer">onsemi</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC847" description="0.1A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="BC847BLT1G"/>
+      <property name="LCSC" value="C94393"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e5d9ed43-b581-4db1-b7cc-69a4e535bd34</tstamps>
     </comp>
     <comp ref="R1">
       <value>1k</value>
@@ -585,6 +730,28 @@
       <tstamps>00000000-0000-0000-0000-000062408417</tstamps>
     </comp>
     <comp ref="R2">
+      <value>22k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-0722KL_C114565.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C114565</field>
+        <field name="MPN">RC0805FR-0722KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-0722KL"/>
+      <property name="LCSC" value="C114565"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>09043a16-cfcf-408c-811b-deb993285336</tstamps>
+    </comp>
+    <comp ref="R3">
       <value>1k</value>
       <footprint>agro-footprint:RES_0805</footprint>
       <datasheet>https://datasheet.lcsc.com/lcsc/1810010217_YAGEO-RC0805JR-071KL_C100046.pdf</datasheet>
@@ -602,83 +769,69 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>14015b63-54ce-4e0e-9698-fcc940da5f21</tstamps>
-    </comp>
-    <comp ref="R3">
-      <value>100k</value>
-      <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810241513_YAGEO-RC0805JR-07100KL_C100049.pdf</datasheet>
-      <fields>
-        <field name="LCSC">C100049</field>
-        <field name="MPN">RC0805JR-07100KL</field>
-        <field name="Manufacturer">Yageo</field>
-        <field name="Supplier">LCSC</field>
-      </fields>
-      <libsource lib="Device" part="R" description="Resistor"/>
-      <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-07100KL"/>
-      <property name="LCSC" value="C100049"/>
-      <property name="Supplier" value="LCSC"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="fanControl.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>921bbbcc-afa7-4000-954c-4d59a653ef08</tstamps>
+      <tstamps>47433680-f60a-4e63-9f30-599565ca5cb5</tstamps>
     </comp>
     <comp ref="R4">
-      <value>10k</value>
+      <value>22k</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-0722KL_C114565.pdf</datasheet>
       <fields>
-        <field name="LCSC">C100047</field>
-        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="LCSC">C114565</field>
+        <field name="MPN">RC0805FR-0722KL</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-0710KL"/>
-      <property name="LCSC" value="C100047"/>
+      <property name="MPN" value="RC0805FR-0722KL"/>
+      <property name="LCSC" value="C114565"/>
       <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-00006186adfa</tstamps>
+      <tstamps>50207af5-77c0-43bf-b46e-773c60ced66f</tstamps>
     </comp>
     <comp ref="R5">
-      <value>2k2</value>
+      <value>3k3</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810311425_YAGEO-RC0805JR-072K2L_C114237.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-073K3L_C114531.pdf</datasheet>
       <fields>
-        <field name="LCSC">C114237</field>
-        <field name="MPN">RC0805JR-072K2L</field>
+        <field name="LCSC">C114531</field>
+        <field name="MPN">RC0805FR-073K3L</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="RMK" value="1%"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-072K2L"/>
-      <property name="LCSC" value="C114237"/>
+      <property name="MPN" value="RC0805FR-073K3L"/>
+      <property name="LCSC" value="C114531"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-00006186c2e3</tstamps>
+      <tstamps>f7bd2fb5-daf3-49bf-aaf7-8ec02d87c28b</tstamps>
     </comp>
     <comp ref="R6">
       <value>4k7</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810010620_YAGEO-RC0805JR-074K7L_C105427.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810161341_YAGEO-RC0805FR-074K7L_C60816.pdf</datasheet>
       <fields>
-        <field name="LCSC">C105427</field>
-        <field name="MPN">RC0805JR-074K7L</field>
+        <field name="LCSC">C60816</field>
+        <field name="MPN">RC0805FR-074K7L</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-074K7L"/>
-      <property name="LCSC" value="C105427"/>
+      <property name="MPN" value="RC0805FR-074K7L"/>
+      <property name="LCSC" value="C60816"/>
       <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -745,44 +898,48 @@
       <tstamps>00000000-0000-0000-0000-000061898397</tstamps>
     </comp>
     <comp ref="R10">
-      <value>10k</value>
+      <value>4k7</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810161341_YAGEO-RC0805FR-074K7L_C60816.pdf</datasheet>
       <fields>
-        <field name="LCSC">C100047</field>
-        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="LCSC">C60816</field>
+        <field name="MPN">RC0805FR-074K7L</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-0710KL"/>
-      <property name="LCSC" value="C100047"/>
+      <property name="MPN" value="RC0805FR-074K7L"/>
+      <property name="LCSC" value="C60816"/>
       <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>a83ca5b9-d96d-4b22-8874-8a6b43e8cbbc</tstamps>
+      <tstamps>a955c1f9-4acd-4ecf-b4a1-037f991bd526</tstamps>
     </comp>
     <comp ref="R11">
-      <value>10k</value>
+      <value>4k7</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810161341_YAGEO-RC0805FR-074K7L_C60816.pdf</datasheet>
       <fields>
-        <field name="LCSC">C100047</field>
-        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="LCSC">C60816</field>
+        <field name="MPN">RC0805FR-074K7L</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-0710KL"/>
-      <property name="LCSC" value="C100047"/>
+      <property name="MPN" value="RC0805FR-074K7L"/>
+      <property name="LCSC" value="C60816"/>
       <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>ca9c9009-1dba-48c1-bc2c-dbb831b2a608</tstamps>
+      <tstamps>219509da-bafb-4842-bab3-29fa69e7bf55</tstamps>
     </comp>
     <comp ref="R12">
       <value>470R</value>
@@ -802,7 +959,7 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000062154b27</tstamps>
+      <tstamps>d9cde142-9863-40b3-84a7-38fdad940f26</tstamps>
     </comp>
     <comp ref="R13">
       <value>470R</value>
@@ -822,116 +979,59 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>e15e7bb0-aee8-4314-944b-1b75c2378f49</tstamps>
+      <tstamps>37846ee0-873d-48b9-b10a-21be2f119a02</tstamps>
     </comp>
     <comp ref="R14">
-      <value>1k</value>
+      <value>22k</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810010217_YAGEO-RC0805JR-071KL_C100046.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-0722KL_C114565.pdf</datasheet>
       <fields>
-        <field name="LCSC">C100046</field>
-        <field name="MPN">RC0805JR-071KL</field>
+        <field name="LCSC">C114565</field>
+        <field name="MPN">RC0805FR-0722KL</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-071KL"/>
-      <property name="LCSC" value="C100046"/>
+      <property name="MPN" value="RC0805FR-0722KL"/>
+      <property name="LCSC" value="C114565"/>
       <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>c54b22c4-23c0-46b6-88f9-292eb58d5599</tstamps>
+      <tstamps>fa1ede9f-dc7a-4921-bc9c-469518fa5f97</tstamps>
     </comp>
     <comp ref="R15">
-      <value>100k</value>
+      <value>10k</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810241513_YAGEO-RC0805JR-07100KL_C100049.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
       <fields>
-        <field name="LCSC">C100049</field>
-        <field name="MPN">RC0805JR-07100KL</field>
+        <field name="LCSC">C100047</field>
+        <field name="MPN">RC0805JR-0710KL</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-07100KL"/>
-      <property name="LCSC" value="C100049"/>
+      <property name="MPN" value="RC0805JR-0710KL"/>
+      <property name="LCSC" value="C100047"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>242feec8-adc6-4a30-a86b-f366dc0f359b</tstamps>
+      <tstamps>31dc5c70-2f58-4bab-9d1f-ee42dde70367</tstamps>
     </comp>
     <comp ref="R16">
-      <value>3k6</value>
-      <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810311331_YAGEO-AC0805JR-073K6L_C229201.pdf</datasheet>
-      <fields>
-        <field name="LCSC">C229201</field>
-        <field name="MPN">AC0805JR-073K6L</field>
-        <field name="Manufacturer">Yageo</field>
-        <field name="Supplier">LCSC</field>
-      </fields>
-      <libsource lib="Device" part="R" description="Resistor"/>
-      <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="AC0805JR-073K6L"/>
-      <property name="LCSC" value="C229201"/>
-      <property name="Supplier" value="LCSC"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="fanControl.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>86a37c0b-6017-416f-92cb-005c1ebc739f</tstamps>
-    </comp>
-    <comp ref="R17">
-      <value>6k8</value>
-      <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810311425_YAGEO-RC0805JR-076K8L_C137409.pdf</datasheet>
-      <fields>
-        <field name="LCSC">C137409</field>
-        <field name="MPN">RC0805JR-076K8L</field>
-        <field name="Manufacturer">Yageo</field>
-        <field name="Supplier">LCSC</field>
-      </fields>
-      <libsource lib="Device" part="R" description="Resistor"/>
-      <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-076K8L"/>
-      <property name="LCSC" value="C137409"/>
-      <property name="Supplier" value="LCSC"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="fanControl.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>2add4251-7da1-4e81-92e5-4d6bad9b3c37</tstamps>
-    </comp>
-    <comp ref="R18">
-      <value>1k1 1%</value>
-      <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810241428_YAGEO-RC0805FR-071K1L_C185294.pdf</datasheet>
-      <fields>
-        <field name="LCSC">C185294</field>
-        <field name="MPN">RC0805FR-071K1L</field>
-        <field name="Manufacturer">Yageo</field>
-        <field name="Supplier">LCSC</field>
-      </fields>
-      <libsource lib="Device" part="R" description="Resistor"/>
-      <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805FR-071K1L"/>
-      <property name="LCSC" value="C185294"/>
-      <property name="Supplier" value="LCSC"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="fanControl.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-00006189838b</tstamps>
-    </comp>
-    <comp ref="R19">
-      <value>3k3 1%</value>
+      <value>3k3</value>
       <footprint>agro-footprint:RES_0805</footprint>
       <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-073K3L_C114531.pdf</datasheet>
       <fields>
         <field name="LCSC">C114531</field>
         <field name="MPN">RC0805FR-073K3L</field>
         <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
@@ -939,6 +1039,73 @@
       <property name="MPN" value="RC0805FR-073K3L"/>
       <property name="LCSC" value="C114531"/>
       <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f1161d20-0ba9-434b-9fb8-5f8d3b3e54fb</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>3k3</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-073K3L_C114531.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C114531</field>
+        <field name="MPN">RC0805FR-073K3L</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-073K3L"/>
+      <property name="LCSC" value="C114531"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a71eeeb6-aa7f-408a-8b36-fff013e037bf</tstamps>
+    </comp>
+    <comp ref="R18">
+      <value>1k1</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810241428_YAGEO-RC0805FR-071K1L_C185294.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C185294</field>
+        <field name="MPN">RC0805FR-071K1L</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-071K1L"/>
+      <property name="LCSC" value="C185294"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00006189838b</tstamps>
+    </comp>
+    <comp ref="R19">
+      <value>3k3</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-073K3L_C114531.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C114531</field>
+        <field name="MPN">RC0805FR-073K3L</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-073K3L"/>
+      <property name="LCSC" value="C114531"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -1142,27 +1309,27 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>cbe6ab44-e17e-47c0-a0b6-9ff6e440eee0</tstamps>
+      <tstamps>da5b2ead-ab7c-47ec-a15a-68b397f5e2c4</tstamps>
     </comp>
     <comp ref="R30">
-      <value>100k</value>
+      <value>10k</value>
       <footprint>agro-footprint:RES_0805</footprint>
-      <datasheet>https://datasheet.lcsc.com/lcsc/1810241513_YAGEO-RC0805JR-07100KL_C100049.pdf</datasheet>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
       <fields>
-        <field name="LCSC">C100049</field>
-        <field name="MPN">RC0805JR-07100KL</field>
+        <field name="LCSC">C100047</field>
+        <field name="MPN">RC0805JR-0710KL</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">LCSC</field>
       </fields>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Manufacturer" value="Yageo"/>
-      <property name="MPN" value="RC0805JR-07100KL"/>
-      <property name="LCSC" value="C100049"/>
+      <property name="MPN" value="RC0805JR-0710KL"/>
+      <property name="LCSC" value="C100047"/>
       <property name="Supplier" value="LCSC"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000061e404bc</tstamps>
+      <tstamps>d235a163-cb99-418c-b376-dc287a9d97d6</tstamps>
     </comp>
     <comp ref="R31">
       <value>1k</value>
@@ -1223,6 +1390,150 @@
       <property name="Sheetfile" value="fanControl.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>998d67e8-ae60-4b98-bd50-cf908990b6b3</tstamps>
+    </comp>
+    <comp ref="R34">
+      <value>10k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C100047</field>
+        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805JR-0710KL"/>
+      <property name="LCSC" value="C100047"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d45d11e6-5313-4462-a8c5-5d67b48915c2</tstamps>
+    </comp>
+    <comp ref="R35">
+      <value>10k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C100047</field>
+        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805JR-0710KL"/>
+      <property name="LCSC" value="C100047"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>21c982c4-0ff8-4b21-831b-24544292996a</tstamps>
+    </comp>
+    <comp ref="R36">
+      <value>6k8</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311431_YAGEO-RC0805FR-076K8L_C114550.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C114550</field>
+        <field name="MPN">RC0805FR-076K8L</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="RMK" value="1%"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-076K8L"/>
+      <property name="LCSC" value="C114550"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ac70f33f-2480-4bfa-8552-5fa49d887e32</tstamps>
+    </comp>
+    <comp ref="R37">
+      <value>1k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810010217_YAGEO-RC0805JR-071KL_C100046.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C100046</field>
+        <field name="MPN">RC0805JR-071KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805JR-071KL"/>
+      <property name="LCSC" value="C100046"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9a7a10af-6813-48ac-8fc8-617b33ead1b5</tstamps>
+    </comp>
+    <comp ref="R38">
+      <value>10k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C100047</field>
+        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805JR-0710KL"/>
+      <property name="LCSC" value="C100047"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2f722397-a902-444a-8f35-032496132825</tstamps>
+    </comp>
+    <comp ref="R39">
+      <value>10k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810171610_YAGEO-RC0805JR-0710KL_C100047.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C100047</field>
+        <field name="MPN">RC0805JR-0710KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805JR-0710KL"/>
+      <property name="LCSC" value="C100047"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ac87c8b1-7da6-41a3-a0da-b760ad7b4c2b</tstamps>
+    </comp>
+    <comp ref="R40">
+      <value>22k</value>
+      <footprint>agro-footprint:RES_0805</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810311430_YAGEO-RC0805FR-0722KL_C114565.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C114565</field>
+        <field name="MPN">RC0805FR-0722KL</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="RMK">1%</field>
+        <field name="Supplier">LCSC</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-0722KL"/>
+      <property name="LCSC" value="C114565"/>
+      <property name="Supplier" value="LCSC"/>
+      <property name="RMK" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="fanControl.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>81d7e6f6-1ca7-4255-ad0a-e52872cc6b8f</tstamps>
     </comp>
     <comp ref="RV1">
       <value>1k</value>
@@ -1306,8 +1617,8 @@
     </comp>
     <comp ref="U5">
       <value>ESP-12E</value>
-      <footprint>kicad-ESP8266:ESP-12E</footprint>
-      <datasheet>http://l0l.org.uk/2014/12/esp8266-modules-hardware-guide-gotta-catch-em-all/</datasheet>
+      <footprint>ESP8266:ESP-12E</footprint>
+      <datasheet>https://components101.com/sites/default/files/2021-09/ESP12E-Datasheet.pdf</datasheet>
       <fields>
         <field name="LCSC">C89297</field>
         <field name="MPN">ESP-12E</field>
@@ -1485,12 +1796,26 @@
         <pin num="4" name="4" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Device" part="Q_NMOS_GSD">
-      <description>N-MOSFET transistor, gate/source/drain</description>
+    <libpart lib="Device" part="Q_PMOS_GDS">
+      <description>P-MOSFET transistor, gate/drain/source</description>
       <docs>~</docs>
       <fields>
         <field name="Reference">Q</field>
-        <field name="Value">Q_NMOS_GSD</field>
+        <field name="Value">Q_PMOS_GDS</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Q_PMOS_GSD">
+      <description>P-MOSFET transistor, gate/source/drain</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_PMOS_GSD</field>
         <field name="Datasheet">~</field>
       </fields>
       <pins>
@@ -1697,63 +2022,22 @@
         <pin num="3" name="E" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Transistor_BJT" part="BC847BDW1">
-      <description>100mA IC, 45V Vce, Dual NPN/NPN Transistors, SOT-363</description>
-      <docs>http://www.onsemi.com/pub_link/Collateral/BC846BDW1T1-D.PDF</docs>
+    <libpart lib="Transistor_BJT" part="BC847">
+      <description>0.1A Ic, 45V Vce, NPN Transistor, SOT-23</description>
+      <docs>http://www.infineon.com/dgdl/Infineon-BC847SERIES_BC848SERIES_BC849SERIES_BC850SERIES-DS-v01_01-en.pdf?fileId=db3a304314dca389011541d4630a1657</docs>
       <footprints>
-        <fp>SOT?363*</fp>
+        <fp>SOT?23*</fp>
       </footprints>
       <fields>
         <field name="Reference">Q</field>
-        <field name="Value">BC847BDW1</field>
-        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
-        <field name="Datasheet">http://www.onsemi.com/pub_link/Collateral/BC846BDW1T1-D.PDF</field>
+        <field name="Value">BC847</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">http://www.infineon.com/dgdl/Infineon-BC847SERIES_BC848SERIES_BC849SERIES_BC850SERIES-DS-v01_01-en.pdf?fileId=db3a304314dca389011541d4630a1657</field>
       </fields>
       <pins>
-        <pin num="1" name="E1" type="passive"/>
-        <pin num="2" name="B1" type="input"/>
-        <pin num="3" name="C2" type="passive"/>
-        <pin num="4" name="E2" type="passive"/>
-        <pin num="5" name="B2" type="input"/>
-        <pin num="6" name="C1" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="Transistor_FET" part="DMP3013SFV">
-      <description>-12A Id, -30V Vds, P-Channel Power MOSFET, 9.5mOhm Ron, 33.7nC Qg (typ), PowerDI3333-8</description>
-      <docs>https://www.diodes.com/assets/Datasheets/DMP3013SFV.pdf</docs>
-      <footprints>
-        <fp>Diodes*PowerDI3333*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">Q</field>
-        <field name="Value">DMP3013SFV</field>
-        <field name="Footprint">Package_SON:Diodes_PowerDI3333-8</field>
-        <field name="Datasheet">https://www.diodes.com/assets/Datasheets/DMP3013SFV.pdf</field>
-      </fields>
-      <pins>
-        <pin num="1" name="S" type="passive"/>
-        <pin num="2" name="S" type="passive"/>
-        <pin num="3" name="S" type="passive"/>
-        <pin num="4" name="G" type="passive"/>
-        <pin num="5" name="D" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="Transistor_FET" part="IRF540N">
-      <description>33A Id, 100V Vds, HEXFET N-Channel MOSFET, TO-220</description>
-      <docs>http://www.irf.com/product-info/datasheets/data/irf540n.pdf</docs>
-      <footprints>
-        <fp>TO?220*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">Q</field>
-        <field name="Value">IRF540N</field>
-        <field name="Footprint">Package_TO_SOT_THT:TO-220-3_Vertical</field>
-        <field name="Datasheet">http://www.irf.com/product-info/datasheets/data/irf540n.pdf</field>
-      </fields>
-      <pins>
-        <pin num="1" name="G" type="input"/>
-        <pin num="2" name="D" type="passive"/>
-        <pin num="3" name="S" type="passive"/>
+        <pin num="1" name="B" type="input"/>
+        <pin num="2" name="E" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
       </pins>
     </libpart>
     <libpart lib="agro-symbol" part="CAP">
@@ -1813,6 +2097,25 @@
         <field name="Reference">D</field>
         <field name="Value">agro-symbol_LED</field>
         <field name="Footprint">agro-footprint:LED_0805</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="agro-symbol" part="SCHOTTKY">
+      <description>Schottky diode, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">SCHOTTKY</field>
+        <field name="Datasheet">~</field>
       </fields>
       <pins>
         <pin num="1" name="K" type="passive"/>
@@ -1906,9 +2209,6 @@
     <library logical="Transistor_BJT">
       <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Transistor_BJT.kicad_sym</uri>
     </library>
-    <library logical="Transistor_FET">
-      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Transistor_FET.kicad_sym</uri>
-    </library>
     <library logical="agro-symbol">
       <uri>C:/Users/bakad/OneDrive/projects/KiCad/library/agro-hardware/agro-symbol.lib</uri>
     </library>
@@ -1942,10 +2242,10 @@
       <node ref="U5" pin="3" pinfunction="CH_PD" pintype="input"/>
     </net>
     <net code="3" name="/FAN_POW">
-      <node ref="Q6" pin="3" pinfunction="S" pintype="passive"/>
+      <node ref="Q6" pin="3" pinfunction="D" pintype="passive"/>
     </net>
     <net code="4" name="/GPIO0">
-      <node ref="Q4" pin="3" pinfunction="C2" pintype="passive"/>
+      <node ref="Q9" pin="3" pinfunction="C" pintype="passive"/>
       <node ref="R21" pin="2" pintype="passive"/>
       <node ref="R26" pin="2" pintype="passive"/>
       <node ref="U5" pin="12" pinfunction="GPIO0" pintype="bidirectional"/>
@@ -1963,19 +2263,17 @@
       <node ref="U5" pin="4" pinfunction="GPIO16" pintype="bidirectional"/>
     </net>
     <net code="8" name="/POW_EN">
-      <node ref="R29" pin="1" pintype="passive"/>
-      <node ref="U5" pin="5" pinfunction="GPIO14" pintype="bidirectional"/>
+      <node ref="R39" pin="2" pintype="passive"/>
+      <node ref="U5" pin="6" pinfunction="GPIO12" pintype="bidirectional"/>
     </net>
     <net code="9" name="/PSU">
-      <node ref="C10" pin="1" pintype="passive"/>
       <node ref="C8" pin="1" pintype="passive"/>
-      <node ref="D7" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="D9" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="L1" pin="1" pintype="passive"/>
       <node ref="R14" pin="1" pintype="passive"/>
       <node ref="R2" pin="1" pintype="passive"/>
       <node ref="R20" pin="2" pintype="passive"/>
       <node ref="RV1" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U4" pin="3" pinfunction="VI" pintype="power_in"/>
     </net>
     <net code="10" name="/PWM">
       <node ref="R31" pin="2" pintype="passive"/>
@@ -1983,23 +2281,24 @@
     </net>
     <net code="11" name="/PWMpin">
       <node ref="R31" pin="1" pintype="passive"/>
-      <node ref="U5" pin="7" pinfunction="GPIO13" pintype="bidirectional"/>
+      <node ref="U5" pin="5" pinfunction="GPIO14" pintype="bidirectional"/>
     </net>
     <net code="12" name="/RPM">
       <node ref="R32" pin="1" pintype="passive"/>
-      <node ref="U5" pin="6" pinfunction="GPIO12" pintype="bidirectional"/>
+      <node ref="U5" pin="7" pinfunction="GPIO13" pintype="bidirectional"/>
     </net>
-    <net code="13" name="/RX">
-      <node ref="R13" pin="2" pintype="passive"/>
-      <node ref="U5" pin="16" pinfunction="TXD" pintype="output"/>
-    </net>
-    <net code="14" name="/TX">
-      <node ref="R12" pin="2" pintype="passive"/>
+    <net code="13" name="/RXD0">
+      <node ref="R12" pin="1" pintype="passive"/>
       <node ref="U5" pin="15" pinfunction="RXD" pintype="input"/>
+    </net>
+    <net code="14" name="/TXD0">
+      <node ref="R13" pin="1" pintype="passive"/>
+      <node ref="U5" pin="16" pinfunction="TXD" pintype="output"/>
     </net>
     <net code="15" name="/USB_5V">
       <node ref="J1" pin="1" pinfunction="VBUS" pintype="power_out"/>
-      <node ref="Q5" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="Q8" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="R16" pin="2" pintype="passive"/>
     </net>
     <net code="16" name="/USB_N">
       <node ref="J1" pin="2" pinfunction="D-" pintype="bidirectional"/>
@@ -2010,31 +2309,33 @@
       <node ref="U2" pin="5" pinfunction="UD+" pintype="bidirectional"/>
     </net>
     <net code="18" name="/USB_sense">
+      <node ref="C14" pin="1" pintype="passive"/>
       <node ref="D5" pin="1" pinfunction="K" pintype="passive"/>
-      <node ref="R16" pin="2" pintype="passive"/>
       <node ref="R17" pin="1" pintype="passive"/>
+      <node ref="R36" pin="2" pintype="passive"/>
       <node ref="U5" pin="14" pinfunction="GPIO5" pintype="bidirectional"/>
     </net>
     <net code="19" name="/V_MON">
+      <node ref="C13" pin="1" pintype="passive"/>
       <node ref="D3" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="R4" pin="2" pintype="passive"/>
-      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
       <node ref="U5" pin="2" pinfunction="ADC" pintype="passive"/>
     </net>
     <net code="20" name="/Vin">
       <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="J2" pin="1" pintype="passive"/>
-      <node ref="Q1" pin="5" pinfunction="D" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="D" pintype="passive"/>
     </net>
     <net code="21" name="/Vin_filt">
       <node ref="C4" pin="1" pintype="passive"/>
       <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="D4" pin="1" pinfunction="K" pintype="passive"/>
-      <node ref="Q1" pin="1" pinfunction="S" pintype="passive"/>
-      <node ref="Q1" pin="2" pinfunction="S" pintype="passive"/>
       <node ref="Q1" pin="3" pinfunction="S" pintype="passive"/>
-      <node ref="Q2" pin="3" pinfunction="D" pintype="passive"/>
-      <node ref="Q6" pin="2" pinfunction="D" pintype="passive"/>
+      <node ref="Q2" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="Q6" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="R38" pin="2" pintype="passive"/>
+      <node ref="R40" pin="2" pintype="passive"/>
       <node ref="R9" pin="1" pintype="passive"/>
       <node ref="U3" pin="1" pinfunction="VIN" pintype="power_in"/>
     </net>
@@ -2049,7 +2350,7 @@
       <node ref="Y1" pin="3" pinfunction="3" pintype="passive"/>
     </net>
     <net code="24" name="/nRST">
-      <node ref="Q4" pin="6" pinfunction="C1" pintype="passive"/>
+      <node ref="Q4" pin="3" pinfunction="C" pintype="passive"/>
       <node ref="R24" pin="2" pintype="passive"/>
       <node ref="R28" pin="2" pintype="passive"/>
       <node ref="U5" pin="1" pinfunction="REST" pintype="input"/>
@@ -2063,6 +2364,8 @@
       <node ref="C10" pin="2" pintype="passive"/>
       <node ref="C11" pin="2" pintype="passive"/>
       <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="C13" pin="2" pintype="passive"/>
+      <node ref="C14" pin="2" pintype="passive"/>
       <node ref="C2" pin="2" pintype="passive"/>
       <node ref="C3" pin="1" pintype="passive"/>
       <node ref="C4" pin="2" pintype="passive"/>
@@ -2080,14 +2383,18 @@
       <node ref="J2" pin="2" pintype="passive"/>
       <node ref="J2" pin="3" pintype="passive"/>
       <node ref="R1" pin="2" pintype="passive"/>
-      <node ref="R15" pin="2" pintype="passive"/>
-      <node ref="R17" pin="2" pintype="passive"/>
+      <node ref="R15" pin="1" pintype="passive"/>
       <node ref="R18" pin="2" pintype="passive"/>
       <node ref="R25" pin="1" pintype="passive"/>
+      <node ref="R29" pin="2" pintype="passive"/>
       <node ref="R3" pin="2" pintype="passive"/>
-      <node ref="R30" pin="2" pintype="passive"/>
+      <node ref="R30" pin="1" pintype="passive"/>
       <node ref="R33" pin="2" pintype="passive"/>
-      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="R34" pin="2" pintype="passive"/>
+      <node ref="R35" pin="1" pintype="passive"/>
+      <node ref="R36" pin="1" pintype="passive"/>
+      <node ref="R37" pin="2" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
       <node ref="R8" pin="2" pintype="passive"/>
       <node ref="U2" pin="1" pinfunction="GND" pintype="power_in"/>
       <node ref="U3" pin="3" pinfunction="GND" pintype="power_in"/>
@@ -2099,130 +2406,164 @@
     <net code="27" name="Net-(C2-Pad1)">
       <node ref="C2" pin="1" pintype="passive"/>
       <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
-      <node ref="Q1" pin="4" pinfunction="G" pintype="passive"/>
+      <node ref="Q1" pin="1" pinfunction="G" pintype="input"/>
       <node ref="R1" pin="1" pintype="passive"/>
     </net>
-    <net code="28" name="Net-(D4-Pad2)">
+    <net code="28" name="Net-(C10-Pad1)">
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="D7" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="D9" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="R34" pin="1" pintype="passive"/>
+      <node ref="U4" pin="3" pinfunction="VI" pintype="power_in"/>
+    </net>
+    <net code="29" name="Net-(D4-Pad2)">
       <node ref="D4" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="R7" pin="1" pintype="passive"/>
     </net>
-    <net code="29" name="Net-(D6-Pad1)">
+    <net code="30" name="Net-(D6-Pad1)">
       <node ref="D6" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="L1" pin="2" pintype="passive"/>
       <node ref="U3" pin="2" pinfunction="OUT" pintype="output"/>
     </net>
-    <net code="30" name="Net-(D8-Pad2)">
+    <net code="31" name="Net-(D8-Pad2)">
       <node ref="D8" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="R27" pin="1" pintype="passive"/>
     </net>
-    <net code="31" name="Net-(JP3-Pad1)">
+    <net code="32" name="Net-(JP3-Pad1)">
       <node ref="R26" pin="1" pintype="passive"/>
     </net>
-    <net code="32" name="Net-(JP4-Pad2)">
+    <net code="33" name="Net-(JP4-Pad2)">
       <node ref="R28" pin="1" pintype="passive"/>
     </net>
-    <net code="33" name="Net-(Q2-Pad1)">
+    <net code="34" name="Net-(Q2-Pad1)">
       <node ref="Q2" pin="1" pinfunction="G" pintype="input"/>
-      <node ref="R2" pin="2" pintype="passive"/>
-      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="Q7" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R38" pin="1" pintype="passive"/>
     </net>
-    <net code="34" name="Net-(Q2-Pad2)">
-      <node ref="Q2" pin="2" pinfunction="S" pintype="passive"/>
+    <net code="35" name="Net-(Q2-Pad3)">
+      <node ref="Q2" pin="3" pinfunction="D" pintype="passive"/>
       <node ref="R4" pin="1" pintype="passive"/>
     </net>
-    <net code="35" name="Net-(Q3-Pad1)">
+    <net code="36" name="Net-(Q3-Pad1)">
       <node ref="R9" pin="2" pintype="passive"/>
       <node ref="U3" pin="5" pinfunction="~{ON}/OFF" pintype="input"/>
     </net>
-    <net code="36" name="Net-(Q3-Pad2)">
+    <net code="37" name="Net-(Q3-Pad2)">
       <node ref="R7" pin="2" pintype="passive"/>
       <node ref="R8" pin="1" pintype="passive"/>
     </net>
-    <net code="37" name="Net-(Q4-Pad1)">
-      <node ref="Q4" pin="1" pinfunction="E1" pintype="passive"/>
-      <node ref="R11" pin="2" pintype="passive"/>
-      <node ref="U2" pin="14" pinfunction="~{RTS}" pintype="output"/>
-    </net>
-    <net code="38" name="Net-(Q4-Pad2)">
-      <node ref="Q4" pin="2" pinfunction="B1" pintype="input"/>
+    <net code="38" name="Net-(Q4-Pad1)">
+      <node ref="Q4" pin="1" pinfunction="B" pintype="input"/>
       <node ref="R10" pin="2" pintype="passive"/>
     </net>
-    <net code="39" name="Net-(Q4-Pad4)">
-      <node ref="Q4" pin="4" pinfunction="E2" pintype="passive"/>
+    <net code="39" name="Net-(Q4-Pad2)">
+      <node ref="Q4" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="R11" pin="1" pintype="passive"/>
+      <node ref="U2" pin="14" pinfunction="~{RTS}" pintype="output"/>
+    </net>
+    <net code="40" name="Net-(Q5-Pad3)">
+      <node ref="Q5" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="Q8" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="R16" pin="1" pintype="passive"/>
+    </net>
+    <net code="41" name="Net-(Q6-Pad1)">
+      <node ref="Q10" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="Q6" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="R40" pin="1" pintype="passive"/>
+    </net>
+    <net code="42" name="Net-(Q7-Pad1)">
+      <node ref="Q7" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R35" pin="2" pintype="passive"/>
+    </net>
+    <net code="43" name="Net-(Q7-Pad2)">
+      <node ref="Q7" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+    </net>
+    <net code="44" name="Net-(Q9-Pad1)">
+      <node ref="Q9" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R11" pin="2" pintype="passive"/>
+    </net>
+    <net code="45" name="Net-(Q9-Pad2)">
+      <node ref="Q9" pin="2" pinfunction="E" pintype="passive"/>
       <node ref="R10" pin="1" pintype="passive"/>
       <node ref="U2" pin="13" pinfunction="~{DTR}" pintype="output"/>
     </net>
-    <net code="40" name="Net-(Q4-Pad5)">
-      <node ref="Q4" pin="5" pinfunction="B2" pintype="input"/>
-      <node ref="R11" pin="1" pintype="passive"/>
-    </net>
-    <net code="41" name="Net-(Q5-Pad1)">
-      <node ref="Q5" pin="1" pinfunction="G" pintype="input"/>
-      <node ref="R14" pin="2" pintype="passive"/>
-      <node ref="R15" pin="1" pintype="passive"/>
-    </net>
-    <net code="42" name="Net-(Q5-Pad2)">
-      <node ref="Q5" pin="2" pinfunction="S" pintype="passive"/>
-      <node ref="R16" pin="1" pintype="passive"/>
-    </net>
-    <net code="43" name="Net-(Q6-Pad1)">
-      <node ref="Q6" pin="1" pinfunction="G" pintype="input"/>
-      <node ref="R29" pin="2" pintype="passive"/>
-      <node ref="R30" pin="1" pintype="passive"/>
-    </net>
-    <net code="44" name="Net-(R12-Pad1)">
-      <node ref="R12" pin="1" pintype="passive"/>
+    <net code="46" name="Net-(R12-Pad2)">
+      <node ref="R12" pin="2" pintype="passive"/>
       <node ref="U2" pin="2" pinfunction="TXD" pintype="output"/>
     </net>
-    <net code="45" name="Net-(R13-Pad1)">
-      <node ref="R13" pin="1" pintype="passive"/>
+    <net code="47" name="Net-(R13-Pad2)">
+      <node ref="R13" pin="2" pintype="passive"/>
       <node ref="U2" pin="3" pinfunction="RXD" pintype="input"/>
     </net>
-    <net code="46" name="Net-(R18-Pad1)">
+    <net code="48" name="Net-(R14-Pad2)">
+      <node ref="Q5" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R14" pin="2" pintype="passive"/>
+      <node ref="R15" pin="2" pintype="passive"/>
+    </net>
+    <net code="49" name="Net-(R17-Pad2)">
+      <node ref="Q8" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="R17" pin="2" pintype="passive"/>
+    </net>
+    <net code="50" name="Net-(R18-Pad1)">
       <node ref="R18" pin="1" pintype="passive"/>
       <node ref="R19" pin="2" pintype="passive"/>
       <node ref="U3" pin="4" pinfunction="FB" pintype="input"/>
     </net>
-    <net code="47" name="Net-(R19-Pad1)">
+    <net code="51" name="Net-(R19-Pad1)">
       <node ref="R19" pin="1" pintype="passive"/>
       <node ref="R20" pin="1" pintype="passive"/>
       <node ref="RV1" pin="2" pinfunction="2" pintype="passive"/>
       <node ref="RV1" pin="3" pinfunction="3" pintype="passive"/>
     </net>
-    <net code="48" name="unconnected-(J1-Pad4)">
+    <net code="52" name="Net-(R29-Pad1)">
+      <node ref="Q10" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="R29" pin="1" pintype="passive"/>
+    </net>
+    <net code="53" name="Net-(R30-Pad2)">
+      <node ref="Q10" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R30" pin="2" pintype="passive"/>
+      <node ref="R39" pin="1" pintype="passive"/>
+    </net>
+    <net code="54" name="Net-(R37-Pad1)">
+      <node ref="Q5" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="R37" pin="1" pintype="passive"/>
+    </net>
+    <net code="55" name="unconnected-(J1-Pad4)">
       <node ref="J1" pin="4" pinfunction="ID" pintype="passive+no_connect"/>
     </net>
-    <net code="49" name="unconnected-(U2-Pad9)">
+    <net code="56" name="unconnected-(U2-Pad9)">
       <node ref="U2" pin="9" pinfunction="~{CTS}" pintype="input+no_connect"/>
     </net>
-    <net code="50" name="unconnected-(U2-Pad10)">
+    <net code="57" name="unconnected-(U2-Pad10)">
       <node ref="U2" pin="10" pinfunction="~{DSR}" pintype="input+no_connect"/>
     </net>
-    <net code="51" name="unconnected-(U2-Pad11)">
+    <net code="58" name="unconnected-(U2-Pad11)">
       <node ref="U2" pin="11" pinfunction="~{RI}" pintype="input+no_connect"/>
     </net>
-    <net code="52" name="unconnected-(U2-Pad12)">
+    <net code="59" name="unconnected-(U2-Pad12)">
       <node ref="U2" pin="12" pinfunction="~{DCD}" pintype="input+no_connect"/>
     </net>
-    <net code="53" name="unconnected-(U2-Pad15)">
+    <net code="60" name="unconnected-(U2-Pad15)">
       <node ref="U2" pin="15" pinfunction="TNOW" pintype="output+no_connect"/>
     </net>
-    <net code="54" name="unconnected-(U5-Pad17)">
+    <net code="61" name="unconnected-(U5-Pad17)">
       <node ref="U5" pin="17" pinfunction="CS0" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="55" name="unconnected-(U5-Pad18)">
+    <net code="62" name="unconnected-(U5-Pad18)">
       <node ref="U5" pin="18" pinfunction="MISO" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="56" name="unconnected-(U5-Pad19)">
+    <net code="63" name="unconnected-(U5-Pad19)">
       <node ref="U5" pin="19" pinfunction="GPIO9" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="57" name="unconnected-(U5-Pad20)">
+    <net code="64" name="unconnected-(U5-Pad20)">
       <node ref="U5" pin="20" pinfunction="GPIO10" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="58" name="unconnected-(U5-Pad21)">
+    <net code="65" name="unconnected-(U5-Pad21)">
       <node ref="U5" pin="21" pinfunction="MOSI" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="59" name="unconnected-(U5-Pad22)">
+    <net code="66" name="unconnected-(U5-Pad22)">
       <node ref="U5" pin="22" pinfunction="SCLK" pintype="bidirectional+no_connect"/>
     </net>
   </nets>

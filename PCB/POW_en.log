@@ -1,4 +1,4 @@
-Circuit: * C:\Users\bakad\source\repos\fanControl\PCB\Draft2.asc
+Circuit: * C:\Users\bakad\source\repos\fanControl\PCB\POW_en.asc
 
 WARNING: Less than two connections to node Q1:33.  This node is used by Q:Q1:2.
 WARNING: Less than two connections to node STEPPING.  This node is used by V3.
@@ -38,20 +38,20 @@ Instance "m:m1:1": Width narrower than recommended for a level 3 MOSFET.
 .step stepping=30
 .step stepping=31
 
-Date: Fri Apr 15 11:23:48 2022
-Total elapsed time: 1.699 seconds.
+Date: Fri Apr 15 11:40:42 2022
+Total elapsed time: 2.009 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 3017
-traniter = 3017
-tranpoints = 1399
-accept = 1299
-rejected = 100
+totiter = 3140
+traniter = 3140
+tranpoints = 1459
+accept = 1341
+rejected = 118
 matrix size = 29
 fillins = 12
 solver = Normal
 Matrix Compiler1: 2.54 KB object code size  0.4/0.3/[0.1]
-Matrix Compiler2: 2.57 KB object code size  0.2/0.3/[0.1]
+Matrix Compiler2: 2.57 KB object code size  0.2/0.4/[0.2]
 
