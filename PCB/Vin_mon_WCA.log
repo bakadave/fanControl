@@ -70,20 +70,20 @@ WARNING: Less than two connections to node STEPPING.  This node is used by V3.
 .step stepping=62
 .step stepping=63
 
-Date: Fri Apr 15 12:14:47 2022
-Total elapsed time: 4.294 seconds.
+Date: Fri May 06 09:47:25 2022
+Total elapsed time: 2.367 seconds.
 
 tnom = 27
 temp = 27
 method = trap
-totiter = 883
+totiter = 860
 traniter = 0
 tranpoints = 0
 accept = 0
 rejected = 0
-matrix size = 25
+matrix size = 24
 fillins = 4
 solver = Normal
-Matrix Compiler1: 1.76 KB object code size  0.3/0.2/[0.1]
-Matrix Compiler2: 2.04 KB object code size  0.2/0.6/[0.1]
+Matrix Compiler1: 1.71 KB object code size  0.3/0.2/[0.1]
+Matrix Compiler2: 1.97 KB object code size  0.2/0.2/[0.1]
 
