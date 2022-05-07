@@ -17,6 +17,7 @@
 #include <TaskScheduler.h>
 #include <ModbusIP_ESP8266.h>
 #include "secrets.h"
+#include <ESP_EEPROM.h>
 
 /*! @brief how to receive variables from platformio.ini
     @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
@@ -30,13 +31,14 @@
 
 constexpr uint32_t BAUDRATE = 9600;
 constexpr uint32_t PWMfreq = 25000;
-constexpr uint8_t rpmPin = D6;      //GPIO12
-constexpr uint8_t pwmPin = D7;      //GPIO13
-constexpr uint8_t onewireBUS = D2;  //GPIO4
-constexpr uint8_t PowEn = D5;       //GPIO14
-constexpr uint8_t USBpin = D1;      //GPIO5
+constexpr uint8_t rpmPin = 13;      //GPIO13
+constexpr uint8_t pwmPin = 14;      //GPIO14
+constexpr uint8_t onewireBUS = 4;   //GPIO4
+constexpr uint8_t PowEn = 12;       //GPIO12
+constexpr uint8_t USBpin = 5;       //GPIO5
 constexpr uint8_t Vmon = A0;        //ADC
 constexpr uint8_t resolution = 9;
+constexpr size_t EEPROMsize = 16;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
@@ -46,7 +48,23 @@ const uint16_t port = atoi(STR(PORT));
 volatile uint8_t halfRevs = 0;
 uint16_t pwm = 0;
 uint16_t setPoint_RPM = 0;
+uint16_t voltage = 0;
+bool USBstate = false;
+bool voltageEnable = false;
+float temperature = 0;
 DeviceAddress tempAddr;
+
+//#pragma pack(push, 1)
+struct EEPROM_struct {
+    bool fan_psu;   //1 byte
+    bool USB_en;    //1 byte
+    uint16_t K_p;   //2 bytes
+    uint16_t K_i;   //2 bytes
+    uint16_t K_d;   //2 bytes
+    float cal_a;    //4 bytes
+    float cal_b;    //4 bytes
+} eepromVar;
+//#pragma pack(pop)
 
 struct Kalman {
     private:
@@ -82,7 +100,7 @@ struct PIDcontroller {
 
     public:
     float Kp = 1.0;
-    float Ki = 1.00;
+    float Ki = 1.0;
     float Kd = 0.1;
 
     void init (uint16_t* _setPoint) {
@@ -113,6 +131,8 @@ void calculateRPM_callback();
 void measureTemp_callback();
 void measureVoltages_callback();
 void USBsense_callback();
+void POWenable_callback();
+void setRPM_callback();
 bool setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
 
@@ -123,8 +143,10 @@ struct Kalman RPMfilter;
 struct PIDcontroller pid;
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(5000, TASK_FOREVER, &measureTemp_callback);
-Task measureVoltages(500, TASK_FOREVER, &measureVoltages_callback);
+Task measureVoltages(250, TASK_FOREVER, &measureVoltages_callback);
 Task USBsense(500, TASK_FOREVER, &USBsense_callback);
+Task POWenable(250, TASK_FOREVER, &POWenable_callback);
+Task setRPM(1000, TASK_FOREVER, &setRPM_callback);
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
 
@@ -135,12 +157,16 @@ void setup() {
     pinMode(pwmPin, OUTPUT);
     pinMode(Vmon, INPUT);
     pinMode(USBpin, INPUT);
+    pinMode(PowEn, OUTPUT);
     analogWriteFreq(PWMfreq);
     analogWriteResolution(10);  /*! @link https://github.com/esp8266/Arduino/pull/7456 */
     analogWrite(pwmPin, pwm);
     attachInterrupt(digitalPinToInterrupt(rpmPin), rpmISR, CHANGE);
 
     Serial.begin(9600);
+
+    EEPROM.begin(EEPROMsize);
+    EEPROM.get(0, eepromVar);
 
     setup_wifi(APlist, APlen);
     setup_OTA();
@@ -154,12 +180,19 @@ void setup() {
 
     //init PID controller for fan RPM
     pid.init(&setPoint_RPM);
+    pid.Kp = eepromVar.K_p / 1000.0;
+    pid.Ki = eepromVar.K_i / 1000.0;
+    pid.Kd = eepromVar.K_d / 1000.0;
     modbus.Hreg(0, setPoint_RPM);
 
     ts.init();
     ts.addTask(calculateRPM);
-    //ts.addTask(measureVoltages);
-    ts.addTask(USBsense);
+    ts.addTask(setRPM);
+    ts.addTask(measureVoltages);
+    if (eepromVar.USB_en)
+        ts.addTask(USBsense);
+    if (!eepromVar.fan_psu)
+        ts.addTask(POWenable);
     ts.enableAll();
 
     modbus.Hreg(5, pid.Kp * 1000);
@@ -172,9 +205,10 @@ void setup() {
         ds.getAddress(tempAddr, 0);
         ds.setResolution(tempAddr, resolution);
         ds.requestTemperaturesByAddress(tempAddr);
+        ds.setWaitForConversion(false); //async
         ts.addTask(measureTemp);
+        measureTemp.enable();
     }
-
 }
 
 void loop() {
@@ -184,10 +218,39 @@ void loop() {
     ArduinoOTA.handle();
 
     modbus.task();
-    setPoint_RPM = modbus.Hreg(0);
-    //pwm = modbus.Hreg(3);
-    analogWrite(pwmPin, pwm);
+    modbus.Hreg(0, setPoint_RPM);
+    //setPoint_RPM = modbus.Hreg(0);
     yield();
+}
+
+void setRPM_callback() {
+    if (!voltageEnable) {
+        setPoint_RPM = 0;
+        return;
+    }
+
+    if (eepromVar.USB_en)
+        if (USBstate == false) {
+            setPoint_RPM = 0;
+            return;
+        }
+
+    if (temperature < 27.0) {
+        setPoint_RPM = 0;
+        return;
+    }
+    if (temperature < 30.0) {
+        setPoint_RPM = 500;
+        return;
+    }
+    if (temperature >= 30.0 && temperature < 40.0) {
+        setPoint_RPM = 500 + (temperature - 30.0) * 100;
+        return;
+    }
+    if (temperature > 40.0) {
+        setPoint_RPM = 1500;
+        return;
+    }
 }
 
 IRAM_ATTR void rpmISR() {
@@ -195,8 +258,10 @@ IRAM_ATTR void rpmISR() {
 }
 
 void measureTemp_callback() {
-    modbus.Hreg(4, (float)(ds.getTempC(tempAddr) * 1000));
+    temperature = ds.getTempC(tempAddr);
+    modbus.Hreg(4, (temperature * 1000.0));
     ds.requestTemperatures();
+    return;
 }
 
 void calculateRPM_callback() {
@@ -216,18 +281,36 @@ void calculateRPM_callback() {
 
     modbus.Hreg(8, pid.compute(rpm, deltaT));
     pwm = pid.compute(rpm, deltaT);
+    analogWrite(pwmPin, pwm);
     modbus.Hreg(3, pwm);
     Serial.printf("Measured RPM: %u Filtered RPM: %u\r\n", (uint16_t)rpm, modbus.Hreg(1));
 }
 
 void measureVoltages_callback() {
-    Serial.printf("Measured voltage: %f\r\n", 0.0);
+    int val = analogRead(Vmon);
+    //val = 4.571274 * val - 22.811258;
+    val = eepromVar.cal_a * val + eepromVar.cal_b;
+    voltage = val;
+    modbus.Hreg(10, val);
     return;
 }
 
 void USBsense_callback() {
-    int val = digitalRead(USBpin);
-    modbus.Hreg(9, val);
+    USBstate = digitalRead(USBpin);
+    modbus.Hreg(9, USBstate);
+    return;
+}
+
+void POWenable_callback() {
+    if(voltage > 1100 && voltage < 1300) {
+        voltageEnable = true;
+        digitalWrite(PowEn, voltageEnable);
+        modbus.Hreg(11, voltageEnable);
+        return;
+    }
+    voltageEnable = false;
+    digitalWrite(PowEn, voltageEnable);
+    modbus.Hreg(11, voltageEnable);
     return;
 }
 
