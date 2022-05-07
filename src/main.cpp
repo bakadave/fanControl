@@ -235,7 +235,7 @@ void setRPM_callback() {
             return;
         }
 
-    if (temperature < 27.0) {
+    if (temperature < 25.0) {
         setPoint_RPM = 0;
         return;
     }
