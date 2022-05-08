@@ -4,5 +4,5 @@
 .vscode/launch.json
 .vscode/ipch
 lib/secrets/src/secrets.cpp
-.raw
-.log
+*.raw
+*.log
