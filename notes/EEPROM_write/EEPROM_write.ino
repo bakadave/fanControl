@@ -28,6 +28,9 @@ struct EEPROM_struct {
     uint16_t K_d;   //2 bytes
     float cal_a;    //4 bytes
     float cal_b;    //4 bytes
+    float nom_vol;  //4 bytes
+    char hname[16]; //16 bytes
+    uint16_t t_curve[3][2];
 } eepromVar, eepromVar2;
 #pragma pack(pop)
 
@@ -36,7 +39,7 @@ void setup() {
   // This odd speed will show ESP8266 boot diagnostics too
   Serial.begin(9600);
   Serial.println();
-  
+
   // Set up the initial (default) values for what is to be stored in EEPROM
   eepromVar.fan_psu = false;
   eepromVar.USB_en = true;
@@ -45,6 +48,9 @@ void setup() {
   eepromVar.K_d = 100;
   eepromVar.cal_a = 4.571274;
   eepromVar.cal_b = - 22.811258;
+  eepromVar.nom_vol = 12.0;
+  eepromVar.hname = "fanControl_table";
+  eepromVar.t_curve = {{25,0}, {30, 500}, {40, 1500}};
 
   // All the library functions are accessed via the EEPROM object created when
   // you include the library header ESP_EEPROM.h
@@ -53,7 +59,7 @@ void setup() {
   // Using a structure makes this easy.
 
   // The begin() call will find the data previously saved in EEPROM if the same size
-  // as was previously committed. If the size is different then the EEEPROM data is cleared. 
+  // as was previously committed. If the size is different then the EEEPROM data is cleared.
   // Note that this is not made permanent until you call commit();
   EEPROM.begin(sizeof(EEPROM_struct));
 
@@ -66,7 +72,7 @@ void setup() {
     Serial.print(EEPROM.percentUsed());
     Serial.println("% of ESP flash space currently used");
   } else {
-    Serial.println("EEPROM size changed - EEPROM data zeroed - commit() to make permanent");    
+    Serial.println("EEPROM size changed - EEPROM data zeroed - commit() to make permanent");
   }*/
 
   //

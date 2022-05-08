@@ -1,8 +1,11 @@
 /*!
-    @link https://github.com/cyberponk/PWM_Signal_Analyzer_for_Arduino/blob/master/PWM_Signal_Analyzer_for_Arduino.ino
-
-    @note to enable ArduinOTA through Windows Firewall, temporarily enable "Display a notification to the user when a program is blocked from receiving inbound connections." and allow there.
-    Trying to chase down the python executable is messy otherwise.
+*   @link https://github.com/cyberponk/PWM_Signal_Analyzer_for_Arduino/blob/master/PWM_Signal_Analyzer_for_Arduino.ino
+*
+*   @note to enable ArduinOTA through Windows Firewall, temporarily enable "Display a notification to the user when a program is blocked from receiving inbound connections." and allow there.
+*   Trying to chase down the python executable is messy otherwise.
+*
+*
+*   @link ESP-12E pinout https://github.com/r00tGER/NodeMCU-ESP12E-pinouts
 */
 
 #define _TASK_TIMECRITICAL
@@ -20,8 +23,7 @@
 #include <ESP_EEPROM.h>
 
 /*! @brief how to receive variables from platformio.ini
-    @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
-    @link ESP-12E pinout https://github.com/r00tGER/NodeMCU-ESP12E-pinouts
+*   @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
 */
 #define ST(A) #A
 #define STR(A) ST(A)
@@ -38,33 +40,34 @@ constexpr uint8_t PowEn = 12;       //GPIO12
 constexpr uint8_t USBpin = 5;       //GPIO5
 constexpr uint8_t Vmon = A0;        //ADC
 constexpr uint8_t resolution = 9;
-constexpr size_t EEPROMsize = 16;
 constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
-constexpr char mDNS_name[] = STR(MDNS_NAME);
 const uint16_t port = atoi(STR(PORT));
+const char mDNS_temp[] = STR(MDNS_NAME);
 
 volatile uint8_t halfRevs = 0;
 uint16_t pwm = 0;
 uint16_t setPoint_RPM = 0;
 uint16_t voltage = 0;
+char mDNS_name[16];
 bool USBstate = false;
 bool voltageEnable = false;
 float temperature = 0;
 DeviceAddress tempAddr;
 
-//#pragma pack(push, 1)
 struct EEPROM_struct {
-    bool fan_psu;   //1 byte
-    bool USB_en;    //1 byte
+    bool fan_psu = true;   //1 byte
+    bool USB_en = false;    //1 byte
     uint16_t K_p;   //2 bytes
     uint16_t K_i;   //2 bytes
     uint16_t K_d;   //2 bytes
-    float cal_a;    //4 bytes
-    float cal_b;    //4 bytes
+    float cal_a = 0;    //4 bytes
+    float cal_b = 0;    //4 bytes
+    float nom_vol;  //4 bytes
+    char hname[16]; //16 bytes
+    uint16_t t_curve[3][2];
 } eepromVar;
-//#pragma pack(pop)
 
 struct Kalman {
     private:
@@ -136,6 +139,8 @@ void setRPM_callback();
 void setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
 
+OneWire oneWire(onewireBUS);
+DallasTemperature ds(&oneWire);
 ESP8266WiFiMulti wifiMulti;
 ModbusIP modbus;
 Scheduler ts;
@@ -146,8 +151,6 @@ Task measureVoltages(250, TASK_FOREVER, &measureVoltages_callback);
 Task USBsense(500, TASK_FOREVER, &USBsense_callback);
 Task POWenable(250, TASK_FOREVER, &POWenable_callback);
 Task setRPM(1000, TASK_FOREVER, &setRPM_callback);
-OneWire oneWire(onewireBUS);
-DallasTemperature ds(&oneWire);
 
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
@@ -164,8 +167,14 @@ void setup() {
 
     Serial.begin(9600);
 
-    EEPROM.begin(EEPROMsize);
+    EEPROM.begin(sizeof(EEPROM_struct));
+    if (EEPROM.percentUsed() == 0) {
+        Serial.println("Error EEPROM not initialised. Entering safa mode");
+        memcpy(mDNS_name, mDNS_temp, sizeof(mDNS_temp));
+    }
     EEPROM.get(0, eepromVar);
+    //mDNS_name = eepromVar.hname;
+    memcpy(mDNS_name, eepromVar.hname, 16);
 
     setup_wifi(APlist, APlen);
     setup_OTA();
@@ -234,20 +243,21 @@ void setRPM_callback() {
             return;
         }
 
-    if (temperature < 25.0) {
-        setPoint_RPM = 0;
+    if (temperature < eepromVar.t_curve[0][0]) {
+        setPoint_RPM = eepromVar.t_curve[0][1];
         return;
     }
-    if (temperature < 30.0) {
-        setPoint_RPM = 500;
+    if (temperature < eepromVar.t_curve[1][0]) {
+        setPoint_RPM = eepromVar.t_curve[1][1];
         return;
     }
-    if (temperature >= 30.0 && temperature < 40.0) {
-        setPoint_RPM = 500 + (temperature - 30.0) * 100;
+    if (temperature >= eepromVar.t_curve[1][0] && temperature < eepromVar.t_curve[2][0]) {
+        uint16_t lin_scaler = (eepromVar.t_curve[2][1] - eepromVar.t_curve[1][1]) / (eepromVar.t_curve[2][0] - eepromVar.t_curve[1][0]);
+        setPoint_RPM = eepromVar.t_curve[1][1] + (temperature - eepromVar.t_curve[1][0]) * lin_scaler;
         return;
     }
-    if (temperature > 40.0) {
-        setPoint_RPM = 1500;
+    if (temperature >= eepromVar.t_curve[2][0]) {
+        setPoint_RPM = eepromVar.t_curve[2][1];
         return;
     }
 }
@@ -299,8 +309,9 @@ void USBsense_callback() {
     return;
 }
 
+//! @note Check if voltage is whithin 10% of nominal voltage. nom_vol needs to be multipled by 100 because voltage is stored as integer.
 void POWenable_callback() {
-    if(voltage > 1100 && voltage < 1300) {
+    if(voltage > (eepromVar.nom_vol * 0.9 * 100.0) && voltage < (eepromVar.nom_vol * 1.1 * 100)) {
         voltageEnable = true;
         digitalWrite(PowEn, voltageEnable);
         modbus.Hreg(11, voltageEnable);
