@@ -89,7 +89,7 @@ struct Kalman {
 
         return Xe;
     }
-};
+} RPMfilter;
 
 //! @link https://forum.arduino.cc/t/pid-self-balancing-robot/626526
 struct PIDcontroller {
@@ -124,7 +124,7 @@ struct PIDcontroller {
 
         return output;
     }
-};
+} pid;
 
 IRAM_ATTR void rpmISR();
 void calculateRPM_callback();
@@ -133,14 +133,13 @@ void measureVoltages_callback();
 void USBsense_callback();
 void POWenable_callback();
 void setRPM_callback();
-bool setup_wifi(const wifiList* APlist, const size_t len);
+void setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
 
 ESP8266WiFiMulti wifiMulti;
 ModbusIP modbus;
 Scheduler ts;
-struct Kalman RPMfilter;
-struct PIDcontroller pid;
+
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(5000, TASK_FOREVER, &measureTemp_callback);
 Task measureVoltages(250, TASK_FOREVER, &measureVoltages_callback);
@@ -154,10 +153,10 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, LED_ON);
     pinMode(rpmPin, INPUT);
-    pinMode(pwmPin, OUTPUT);
     pinMode(Vmon, INPUT);
     pinMode(USBpin, INPUT);
     pinMode(PowEn, OUTPUT);
+    pinMode(pwmPin, OUTPUT);
     analogWriteFreq(PWMfreq);
     analogWriteResolution(10);  /*! @link https://github.com/esp8266/Arduino/pull/7456 */
     analogWrite(pwmPin, pwm);
@@ -279,7 +278,7 @@ void calculateRPM_callback() {
     pid.Ki = (float)modbus.Hreg(7) / 1000;
     pid.Kd = (float)modbus.Hreg(8) / 1000;
 
-    modbus.Hreg(8, pid.compute(rpm, deltaT));
+    //modbus.Hreg(8, pid.compute(rpm, deltaT));
     pwm = pid.compute(rpm, deltaT);
     analogWrite(pwmPin, pwm);
     modbus.Hreg(3, pwm);
@@ -288,10 +287,9 @@ void calculateRPM_callback() {
 
 void measureVoltages_callback() {
     int val = analogRead(Vmon);
-    //val = 4.571274 * val - 22.811258;
     val = eepromVar.cal_a * val + eepromVar.cal_b;
     voltage = val;
-    modbus.Hreg(10, val);
+    modbus.Hreg(10, voltage);
     return;
 }
 
@@ -314,7 +312,7 @@ void POWenable_callback() {
     return;
 }
 
-bool setup_wifi(const wifiList* APs, const size_t len) {
+void setup_wifi(const wifiList* APs, const size_t len) {
 	delay(10);
 
 	//settings stolen from Tasmota, supposed to increase reliablity
@@ -343,7 +341,7 @@ bool setup_wifi(const wifiList* APs, const size_t len) {
 	Serial.println(" IP address: ");
 	Serial.println(WiFi.localIP());
 
-    return true;
+    return;
 }
 
 /*! OTA
