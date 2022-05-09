@@ -1,0 +1,12 @@
+{
+	"fan_psu": "false",
+	"USB_en": "false",
+	"K_p": 1,
+	"K_i": 1,
+	"K_d": 1,
+	"cal_a": 1,
+	"cal_b": 1,
+	"nom_vol": 12,
+	"hname": "fanControl_table",
+	"t_curve": [[25,0],[30,500],[40,1500]]
+}

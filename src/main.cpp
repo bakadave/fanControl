@@ -21,6 +21,7 @@
 #include <ModbusIP_ESP8266.h>
 #include "secrets.h"
 #include <ESP_EEPROM.h>
+#include <ArduinoJson.h>
 
 /*! @brief how to receive variables from platformio.ini
 *   @link https://community.platformio.org/t/setting-variables-in-code-using-build-flags/17167/5
@@ -44,7 +45,14 @@ constexpr unsigned long numRegs = 12;
 constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
 const uint16_t port = atoi(STR(PORT));
-const char mDNS_temp[] = STR(MDNS_NAME);
+const char default_hostname[] = STR(MDNS_NAME);
+
+String inputSerialString;
+bool serialReady = false;
+bool serialStreamStarted = false;
+static unsigned long lastRefreshTime_Serial = 0;
+uint16_t buff_size = 512;
+constexpr uint16_t serial_timeout_ms = 250;
 
 volatile uint8_t halfRevs = 0;
 uint16_t pwm = 0;
@@ -53,17 +61,18 @@ uint16_t voltage = 0;
 char mDNS_name[16];
 bool USBstate = false;
 bool voltageEnable = false;
+bool safeMode = true;
 float temperature = 0;
 DeviceAddress tempAddr;
 
 struct EEPROM_struct {
     bool fan_psu = true;   //1 byte
     bool USB_en = false;    //1 byte
-    uint16_t K_p;   //2 bytes
-    uint16_t K_i;   //2 bytes
-    uint16_t K_d;   //2 bytes
-    float cal_a = 0;    //4 bytes
-    float cal_b = 0;    //4 bytes
+    uint16_t K_p = 1.0;   //2 bytes
+    uint16_t K_i = 1.0;   //2 bytes
+    uint16_t K_d = 0.1;   //2 bytes
+    float cal_a = 1.0;    //4 bytes
+    float cal_b = 0.0;    //4 bytes
     float nom_vol;  //4 bytes
     char hname[16]; //16 bytes
     uint16_t t_curve[3][2];
@@ -102,9 +111,9 @@ struct PIDcontroller {
     int lastError, cumError;
 
     public:
-    float Kp = 1.0;
-    float Ki = 1.0;
-    float Kd = 0.1;
+    float Kp;
+    float Ki;
+    float Kd;
 
     void init (uint16_t* _setPoint) {
         setPoint = _setPoint;
@@ -138,12 +147,16 @@ void POWenable_callback();
 void setRPM_callback();
 void setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
+void handleSerial();
+void serialWatchdog();
+void parseSerial();
 
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
 ESP8266WiFiMulti wifiMulti;
 ModbusIP modbus;
 Scheduler ts;
+DynamicJsonDocument dataJsonBuffer(buff_size);
 
 Task calculateRPM(RPMcalcPeriodMS, TASK_FOREVER, &calculateRPM_callback);
 Task measureTemp(5000, TASK_FOREVER, &measureTemp_callback);
@@ -164,22 +177,35 @@ void setup() {
     analogWriteResolution(10);  /*! @link https://github.com/esp8266/Arduino/pull/7456 */
     analogWrite(pwmPin, pwm);
     attachInterrupt(digitalPinToInterrupt(rpmPin), rpmISR, CHANGE);
+    inputSerialString.reserve(buff_size);
 
     Serial.begin(9600);
 
     EEPROM.begin(sizeof(EEPROM_struct));
-    if (EEPROM.percentUsed() == 0) {
-        Serial.println("Error EEPROM not initialised. Entering safa mode");
-        memcpy(mDNS_name, mDNS_temp, sizeof(mDNS_temp));
+
+    if (EEPROM.percentUsed() != 0) {
+        EEPROM.get(0, eepromVar);
+        memcpy(mDNS_name, eepromVar.hname, 16);
+
+        ts.init();
+        ts.addTask(measureVoltages);
+        ts.addTask(calculateRPM);
+        ts.addTask(setRPM);
+        if (eepromVar.USB_en)
+            ts.addTask(USBsense);
+        if (!eepromVar.fan_psu)
+            ts.addTask(POWenable);
     }
-    EEPROM.get(0, eepromVar);
-    //mDNS_name = eepromVar.hname;
-    memcpy(mDNS_name, eepromVar.hname, 16);
+    else {
+        Serial.println("Error EEPROM not initialised. Entering calibration mode");
+        memcpy(mDNS_name, default_hostname, sizeof(default_hostname));
+        ts.addTask(measureVoltages);
+    }
+    ts.enableAll();
 
     setup_wifi(APlist, APlen);
     setup_OTA();
     MDNS.begin(mDNS_name);
-    digitalWrite(LED_BUILTIN, LED_OFF);
 
     modbus.server();
     for (size_t i = 0; i < numRegs; i++)
@@ -193,16 +219,6 @@ void setup() {
     pid.Kd = eepromVar.K_d / 1000.0;
     modbus.Hreg(0, setPoint_RPM);
 
-    ts.init();
-    ts.addTask(calculateRPM);
-    ts.addTask(setRPM);
-    ts.addTask(measureVoltages);
-    if (eepromVar.USB_en)
-        ts.addTask(USBsense);
-    if (!eepromVar.fan_psu)
-        ts.addTask(POWenable);
-    ts.enableAll();
-
     modbus.Hreg(5, pid.Kp * 1000);
     modbus.Hreg(6, pid.Ki * 1000);
     modbus.Hreg(7, pid.Kd * 1000);
@@ -213,10 +229,11 @@ void setup() {
         ds.getAddress(tempAddr, 0);
         ds.setResolution(tempAddr, resolution);
         ds.requestTemperaturesByAddress(tempAddr);
-        ds.setWaitForConversion(false); //async
+        ds.setWaitForConversion(false); //enable async operation
         ts.addTask(measureTemp);
         measureTemp.enable();
     }
+    digitalWrite(LED_BUILTIN, LED_OFF);
 }
 
 void loop() {
@@ -224,11 +241,78 @@ void loop() {
 
     wifiMulti.run();
     ArduinoOTA.handle();
-
     modbus.task();
-    modbus.Hreg(0, setPoint_RPM);
-    //setPoint_RPM = modbus.Hreg(0);
+    serialWatchdog();
+    handleSerial();
     yield();
+}
+
+void handleSerial() {
+    while (Serial.available()) {
+        char c = Serial.read();
+
+        if (inputSerialString.length() == buff_size) {
+            inputSerialString = F("");
+            serialReady = false;
+            serialStreamStarted = false;
+            Serial.println("ERROR: Serial buffer overflow.");
+            return;
+        }
+        if (c == '{') {
+            serialStreamStarted = true;
+            lastRefreshTime_Serial = millis();
+        }
+
+        if (serialStreamStarted) {
+            if (c == '}') {
+                inputSerialString += c;
+                serialReady = true;
+                serialStreamStarted = false;
+            }
+        else
+            inputSerialString += c;
+        }
+    }
+
+    if (serialReady) {
+        parseSerial();
+        inputSerialString = F("");
+        serialReady = false;
+    }
+
+    return;
+}
+
+void parseSerial() {
+    dataJsonBuffer.clear();
+
+    DeserializationError err = deserializeJson(dataJsonBuffer, inputSerialString);
+    if (err) {
+        Serial.println(String(F("DESERIALIZATION failed with code ")) += err.c_str());
+        return;
+    }
+
+    if (dataJsonBuffer.containsKey("K_p")) {
+        pid.Kp = dataJsonBuffer["K_p"];
+        modbus.Hreg(5, pid.Kp * 1000);
+    }
+    if (dataJsonBuffer.containsKey("K_d")) {
+        pid.Kd = dataJsonBuffer["K_d"];
+        modbus.Hreg(5, pid.Kd * 1000);
+    }
+    if (dataJsonBuffer.containsKey("K_i")) {
+        pid.Ki = dataJsonBuffer["K_i"];
+        modbus.Hreg(5, pid.Ki * 1000);
+    }
+}
+
+void serialWatchdog() {
+  if (serialStreamStarted && millis() >= lastRefreshTime_Serial + serial_timeout_ms) {
+        Serial.println("Serial timeout");
+        inputSerialString = F("");
+		serialReady = false;
+        serialStreamStarted = false;
+    }
 }
 
 void setRPM_callback() {
@@ -245,19 +329,23 @@ void setRPM_callback() {
 
     if (temperature < eepromVar.t_curve[0][0]) {
         setPoint_RPM = eepromVar.t_curve[0][1];
+        modbus.Hreg(0, setPoint_RPM);
         return;
     }
     if (temperature < eepromVar.t_curve[1][0]) {
         setPoint_RPM = eepromVar.t_curve[1][1];
+        modbus.Hreg(0, setPoint_RPM);
         return;
     }
     if (temperature >= eepromVar.t_curve[1][0] && temperature < eepromVar.t_curve[2][0]) {
         uint16_t lin_scaler = (eepromVar.t_curve[2][1] - eepromVar.t_curve[1][1]) / (eepromVar.t_curve[2][0] - eepromVar.t_curve[1][0]);
         setPoint_RPM = eepromVar.t_curve[1][1] + (temperature - eepromVar.t_curve[1][0]) * lin_scaler;
+        modbus.Hreg(0, setPoint_RPM);
         return;
     }
     if (temperature >= eepromVar.t_curve[2][0]) {
         setPoint_RPM = eepromVar.t_curve[2][1];
+        modbus.Hreg(0, setPoint_RPM);
         return;
     }
 }
