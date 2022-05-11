@@ -46,19 +46,20 @@ constexpr uint8_t slaveID = 1;
 constexpr uint16_t RPMcalcPeriodMS = 400;
 const uint16_t port = atoi(STR(PORT));
 const char default_hostname[] = STR(MDNS_NAME);
+constexpr size_t hostname_length = 16;
 
 String inputSerialString;
 bool serialReady = false;
 bool serialStreamStarted = false;
 static unsigned long lastRefreshTime_Serial = 0;
 uint16_t buff_size = 512;
-constexpr uint16_t serial_timeout_ms = 250;
+constexpr uint16_t serial_timeout_ms = 500;
 
 volatile uint8_t halfRevs = 0;
 uint16_t pwm = 0;
 uint16_t setPoint_RPM = 0;
 uint16_t voltage = 0;
-char mDNS_name[16];
+char mDNS_name[hostname_length];
 bool USBstate = false;
 bool voltageEnable = false;
 bool safeMode = true;
@@ -68,13 +69,13 @@ DeviceAddress tempAddr;
 struct EEPROM_struct {
     bool fan_psu = true;   //1 byte
     bool USB_en = false;    //1 byte
-    uint16_t K_p = 1.0;   //2 bytes
-    uint16_t K_i = 1.0;   //2 bytes
-    uint16_t K_d = 0.1;   //2 bytes
+    float K_p = 1.0;    //2 bytes
+    float K_i = 1.0;    //2 bytes
+    float K_d = 0.1;    //2 bytes
     float cal_a = 1.0;    //4 bytes
     float cal_b = 0.0;    //4 bytes
     float nom_vol;  //4 bytes
-    char hname[16]; //16 bytes
+    char hname[hostname_length]; //16 bytes
     uint16_t t_curve[3][2];
 } eepromVar;
 
@@ -147,9 +148,11 @@ void POWenable_callback();
 void setRPM_callback();
 void setup_wifi(const wifiList* APlist, const size_t len);
 void setup_OTA();
-void handleSerial();
-void serialWatchdog();
+void handleSerial_callback();
+void serialWatchdog_callback();
+void serialDisable_callback();
 void parseSerial();
+void printEEPROM();
 
 OneWire oneWire(onewireBUS);
 DallasTemperature ds(&oneWire);
@@ -164,6 +167,9 @@ Task measureVoltages(250, TASK_FOREVER, &measureVoltages_callback);
 Task USBsense(500, TASK_FOREVER, &USBsense_callback);
 Task POWenable(250, TASK_FOREVER, &POWenable_callback);
 Task setRPM(1000, TASK_FOREVER, &setRPM_callback);
+Task handleSerial(100, TASK_FOREVER, &handleSerial_callback);
+Task serialWatchdog(50, TASK_FOREVER, &serialWatchdog_callback);
+Task disableSerial(120000L, TASK_ONCE, &serialDisable_callback);
 
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
@@ -182,15 +188,16 @@ void setup() {
     Serial.begin(9600);
 
     EEPROM.begin(sizeof(EEPROM_struct));
+    ts.init();
 
-    if (EEPROM.percentUsed() != 0) {
+    if (EEPROM.percentUsed() >= 0) {
         EEPROM.get(0, eepromVar);
-        memcpy(mDNS_name, eepromVar.hname, 16);
+        printEEPROM();
+        memcpy(mDNS_name, eepromVar.hname, hostname_length);
 
-        ts.init();
-        ts.addTask(measureVoltages);
         ts.addTask(calculateRPM);
         ts.addTask(setRPM);
+        //ts.addTask(disableSerial);
         if (eepromVar.USB_en)
             ts.addTask(USBsense);
         if (!eepromVar.fan_psu)
@@ -198,9 +205,11 @@ void setup() {
     }
     else {
         Serial.println("Error EEPROM not initialised. Entering calibration mode");
-        memcpy(mDNS_name, default_hostname, sizeof(default_hostname));
-        ts.addTask(measureVoltages);
+        memcpy(mDNS_name, default_hostname, hostname_length);
     }
+    ts.addTask(measureVoltages);
+    ts.addTask(handleSerial);
+    ts.addTask(serialWatchdog);
     ts.enableAll();
 
     setup_wifi(APlist, APlen);
@@ -214,9 +223,9 @@ void setup() {
 
     //init PID controller for fan RPM
     pid.init(&setPoint_RPM);
-    pid.Kp = eepromVar.K_p / 1000.0;
-    pid.Ki = eepromVar.K_i / 1000.0;
-    pid.Kd = eepromVar.K_d / 1000.0;
+    pid.Kp = eepromVar.K_p;
+    pid.Ki = eepromVar.K_i;
+    pid.Kd = eepromVar.K_d;
     modbus.Hreg(0, setPoint_RPM);
 
     modbus.Hreg(5, pid.Kp * 1000);
@@ -242,12 +251,10 @@ void loop() {
     wifiMulti.run();
     ArduinoOTA.handle();
     modbus.task();
-    serialWatchdog();
-    handleSerial();
     yield();
 }
 
-void handleSerial() {
+void handleSerial_callback() {
     while (Serial.available()) {
         char c = Serial.read();
 
@@ -283,6 +290,21 @@ void handleSerial() {
     return;
 }
 
+void serialWatchdog_callback() {
+  if (serialStreamStarted && millis() >= lastRefreshTime_Serial + serial_timeout_ms) {
+        Serial.println("Serial timeout");
+        inputSerialString = F("");
+		serialReady = false;
+        serialStreamStarted = false;
+    }
+}
+
+void serialDisable_callback() {
+    handleSerial.disable();
+    serialWatchdog.disable();
+    return;
+}
+
 void parseSerial() {
     dataJsonBuffer.clear();
 
@@ -292,40 +314,102 @@ void parseSerial() {
         return;
     }
 
+    if (dataJsonBuffer.containsKey("fan_psu")) {
+        eepromVar.fan_psu = dataJsonBuffer["fan_psu"];
+    }
+    if (dataJsonBuffer.containsKey("USB_en")) {
+        eepromVar.USB_en = dataJsonBuffer["USB_en"];
+    }
     if (dataJsonBuffer.containsKey("K_p")) {
         pid.Kp = dataJsonBuffer["K_p"];
+        eepromVar.K_p = pid.Kp;
         modbus.Hreg(5, pid.Kp * 1000);
-    }
-    if (dataJsonBuffer.containsKey("K_d")) {
-        pid.Kd = dataJsonBuffer["K_d"];
-        modbus.Hreg(5, pid.Kd * 1000);
     }
     if (dataJsonBuffer.containsKey("K_i")) {
         pid.Ki = dataJsonBuffer["K_i"];
-        modbus.Hreg(5, pid.Ki * 1000);
+        eepromVar.K_i = pid.Ki;
+        modbus.Hreg(6, pid.Ki * 1000);
     }
+    if (dataJsonBuffer.containsKey("K_d")) {
+        pid.Kd = dataJsonBuffer["K_d"];
+        eepromVar.K_d = pid.Kd;
+        modbus.Hreg(7, pid.Kd * 1000);
+    }
+    if (dataJsonBuffer.containsKey("cal_a")) {
+        eepromVar.cal_a = dataJsonBuffer["cal_a"];
+    }
+    if (dataJsonBuffer.containsKey("cal_b")) {
+        eepromVar.cal_b = dataJsonBuffer["cal_b"];
+    }
+    if (dataJsonBuffer.containsKey("nom_vol")) {
+        eepromVar.nom_vol = dataJsonBuffer["nom_vol"];
+    }
+    if (dataJsonBuffer.containsKey("hname")) {
+        String _hostname = dataJsonBuffer["hname"];
+        if (_hostname.length() <= hostname_length && _hostname.length() > 0) {
+            _hostname.toCharArray(eepromVar.hname, _hostname.length() + 1);
+        }
+    }
+    if (dataJsonBuffer.containsKey("t_curve")) {
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 2; j++) {
+                eepromVar.t_curve[i][j] = dataJsonBuffer["t_curve"][i][j];
+            }
+        }
+    }
+
+    EEPROM.put(0, eepromVar);
+    EEPROM.commit();
+    EEPROM.get(0, eepromVar);
+    printEEPROM();
 }
 
-void serialWatchdog() {
-  if (serialStreamStarted && millis() >= lastRefreshTime_Serial + serial_timeout_ms) {
-        Serial.println("Serial timeout");
-        inputSerialString = F("");
-		serialReady = false;
-        serialStreamStarted = false;
+void printEEPROM() {
+    Serial.print("EEPROM data read, fan_PSU - ");
+    Serial.println(eepromVar.fan_psu);
+    Serial.print("EEPROM data read, USB_en - ");
+    Serial.println(eepromVar.USB_en);
+    Serial.print("EEPROM data read, K_p - ");
+    Serial.println(eepromVar.K_p, 3);
+    Serial.print("EEPROM data read, K_i - ");
+    Serial.println(eepromVar.K_i, 3);
+    Serial.print("EEPROM data read, K_d - ");
+    Serial.println(eepromVar.K_d, 3);
+    Serial.print("EEPROM data read, cal_a - ");
+    Serial.println(eepromVar.cal_a, 6);
+    Serial.print("EEPROM data read, cal_b - ");
+    Serial.println(eepromVar.cal_b, 6);
+    Serial.print("EEPROM data read, nom_vol - ");
+    Serial.println(eepromVar.nom_vol, 2);
+    Serial.print("EEPROM data read, hostname - ");
+    for (uint16_t i = 0; i < hostname_length; i++)
+        Serial.print(eepromVar.hname[i]);
+    Serial.println("");
+    Serial.print("EEPROM data read, t_curve - ");
+    for(int i = 0; i < 3; i++) {
+        Serial.print("[");
+            for(int j = 0; j < 2; j++) {
+                Serial.print(eepromVar.t_curve[i][j]);
+                if (j==0) Serial.print(",");
+            }
+        Serial.print("]");
     }
+    Serial.println("");
+    return;
 }
 
 void setRPM_callback() {
-    if (!voltageEnable) {
+    if (eepromVar.fan_psu == false && voltageEnable == false) {
         setPoint_RPM = 0;
+        modbus.Hreg(0, setPoint_RPM);
         return;
     }
 
-    if (eepromVar.USB_en)
-        if (USBstate == false) {
-            setPoint_RPM = 0;
-            return;
-        }
+    if (eepromVar.USB_en == true && USBstate == false) {
+        setPoint_RPM = 0;
+        modbus.Hreg(0, setPoint_RPM);
+        return;
+    }
 
     if (temperature < eepromVar.t_curve[0][0]) {
         setPoint_RPM = eepromVar.t_curve[0][1];
@@ -376,11 +460,9 @@ void calculateRPM_callback() {
     pid.Ki = (float)modbus.Hreg(7) / 1000;
     pid.Kd = (float)modbus.Hreg(8) / 1000;
 
-    //modbus.Hreg(8, pid.compute(rpm, deltaT));
     pwm = pid.compute(rpm, deltaT);
     analogWrite(pwmPin, pwm);
     modbus.Hreg(3, pwm);
-    Serial.printf("Measured RPM: %u Filtered RPM: %u\r\n", (uint16_t)rpm, modbus.Hreg(1));
 }
 
 void measureVoltages_callback() {
@@ -402,12 +484,12 @@ void POWenable_callback() {
     if(voltage > (eepromVar.nom_vol * 0.9 * 100.0) && voltage < (eepromVar.nom_vol * 1.1 * 100)) {
         voltageEnable = true;
         digitalWrite(PowEn, voltageEnable);
-        modbus.Hreg(11, voltageEnable);
+        modbus.Hreg(8, voltageEnable);
         return;
     }
     voltageEnable = false;
     digitalWrite(PowEn, voltageEnable);
-    modbus.Hreg(11, voltageEnable);
+    modbus.Hreg(8, voltageEnable);
     return;
 }
 

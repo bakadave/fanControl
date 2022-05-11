@@ -23,14 +23,14 @@ const int BLUE_LED_PIN = 2;
 struct EEPROM_struct {
     bool fan_psu;   //1 byte
     bool USB_en;    //1 byte
-    uint16_t K_p;   //2 bytes
-    uint16_t K_i;   //2 bytes
-    uint16_t K_d;   //2 bytes
+    float K_p;      //2 bytes
+    float K_i;      //2 bytes
+    float K_d;      //2 bytes
     float cal_a;    //4 bytes
     float cal_b;    //4 bytes
     float nom_vol;  //4 bytes
-    char hname[16]; //16 bytes
-    uint16_t t_curve[3][2];
+    char hname[16] = "fanControl_table"; //16 bytes
+    uint16_t t_curve[3][2] = {{25,0}, {30, 500}, {40, 1500}};
 } eepromVar, eepromVar2;
 #pragma pack(pop)
 
@@ -43,14 +43,20 @@ void setup() {
   // Set up the initial (default) values for what is to be stored in EEPROM
   eepromVar.fan_psu = false;
   eepromVar.USB_en = true;
-  eepromVar.K_p = 1000;
-  eepromVar.K_i = 1000;
-  eepromVar.K_d = 100;
+  eepromVar.K_p = 1.0;
+  eepromVar.K_i = 1.0;
+  eepromVar.K_d = 0.1;
   eepromVar.cal_a = 4.571274;
   eepromVar.cal_b = - 22.811258;
   eepromVar.nom_vol = 12.0;
-  eepromVar.hname = "fanControl_table";
-  eepromVar.t_curve = {{25,0}, {30, 500}, {40, 1500}};
+//  eepromVar.hname = "fanControl_table";
+//   eepromVar.t_curve = {{25,0}, {30, 500}, {40, 1500}};
+//   eepromVar.t_curve[0][0] = 25;
+//   eepromVar.t_curve[0][1] = 0;
+//   eepromVar.t_curve[1][0] = 30;
+//   eepromVar.t_curve[1][1] = 500;
+//   eepromVar.t_curve[2][0] = 40;
+//   eepromVar.t_curve[2][1] = 1500;
 
   // All the library functions are accessed via the EEPROM object created when
   // you include the library header ESP_EEPROM.h
@@ -90,20 +96,36 @@ void setup() {
   // For this example, a different struct variable is used 
   EEPROM.get(0, eepromVar2);
 
-  Serial.print("EEPROM data read, fanPSU - ");
-  Serial.println(eepromVar2.fan_psu);
-  Serial.print("EEPROM data read, USBen - ");
-  Serial.println(eepromVar2.USB_en);
+  Serial.print("EEPROM data read, fan_PSU - ");
+  Serial.println(eepromVar.fan_psu);
+  Serial.print("EEPROM data read, USB_en - ");
+  Serial.println(eepromVar.USB_en);
   Serial.print("EEPROM data read, K_p - ");
-  Serial.println(eepromVar2.K_p);
+  Serial.println(eepromVar.K_p, 3);
   Serial.print("EEPROM data read, K_i - ");
-  Serial.println(eepromVar2.K_i);
+  Serial.println(eepromVar.K_i, 3);
   Serial.print("EEPROM data read, K_d - ");
-  Serial.println(eepromVar2.K_d);
+  Serial.println(eepromVar.K_d, 3);
   Serial.print("EEPROM data read, cal_a - ");
-  Serial.println(eepromVar2.cal_a, 6);
+  Serial.println(eepromVar.cal_a, 6);
   Serial.print("EEPROM data read, cal_b - ");
-  Serial.println(eepromVar2.cal_b, 6);
+  Serial.println(eepromVar.cal_b, 6);
+  Serial.print("EEPROM data read, nom_vol - ");
+  Serial.println(eepromVar.nom_vol, 2);
+  Serial.print("EEPROM data read, hostname - ");
+  for (int i = 0; i < hostname_length; i++)
+      Serial.print(eepromVar.hname[i]);
+  Serial.println("");
+  Serial.print("EEPROM data read, t_curve - ");
+  for(int i = 0; i < 3; i++) {
+      Serial.print("[");
+          for(int j = 0; j < 2; j++) {
+              Serial.print(eepromVar.t_curve[i][j]);
+              if (j==0) Serial.print(",");
+          }
+      Serial.print("]");
+  }
+  Serial.println("");
 }
 
 

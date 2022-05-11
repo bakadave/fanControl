@@ -1,12 +1,12 @@
 {
-	"fan_psu": "false",
-	"USB_en": "false",
-	"K_p": 1,
-	"K_i": 1,
-	"K_d": 1,
-	"cal_a": 1,
-	"cal_b": 1,
-	"nom_vol": 12,
+	"fan_psu": 0,   // 0=false 1=true
+	"USB_en": 0,    // 0=false 1=true
+	"K_p": 1.0,
+	"K_i": 1.0,
+	"K_d": 0.1,
+	"cal_a": 1.0,
+	"cal_b": 0.0,
+	"nom_vol": 12.0,  //used only if fan_psu=0
 	"hname": "fanControl_table",
 	"t_curve": [[25,0],[30,500],[40,1500]]
 }
