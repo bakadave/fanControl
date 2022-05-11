@@ -6,3 +6,4 @@
 lib/secrets/src/secrets.cpp
 *.raw
 *.log
+PCB/fanControl/fanControl-backups/*
